@@ -1,836 +1,282 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تك ستور - لابتوبات وكمبيوتر واكسسوارات</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #08090d;
-      --panel: #11141d;
-      --panel-2: #171b26;
-      --text: #f4f7fb;
-      --muted: #a7b0c0;
-      --line: rgba(255,255,255,.11);
-      --cyan: #25d6ff;
-      --green: #41e6a6;
-      --pink: #ff4f9a;
-      --yellow: #ffd166;
-      --shadow: 0 22px 70px rgba(0,0,0,.36);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: "Cairo", Arial, sans-serif;
-      background:
-        linear-gradient(135deg, rgba(37,214,255,.10), transparent 34%),
-        linear-gradient(225deg, rgba(255,79,154,.09), transparent 30%),
-        var(--bg);
-      color: var(--text);
-    }
-
-    a { color: inherit; text-decoration: none; }
-    button, input { font: inherit; }
-    img { display: block; max-width: 100%; }
-
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      min-height: 74px;
-      padding: 14px clamp(18px, 4vw, 56px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      background: rgba(8,9,13,.82);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.35rem;
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      color: #071018;
-      box-shadow: 0 0 28px rgba(37,214,255,.35);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 22px;
-      color: var(--muted);
-      font-weight: 700;
-      font-size: .95rem;
-    }
-
-    .nav-links a:hover { color: var(--cyan); }
-
-    .cart-btn {
-      border: 1px solid rgba(37,214,255,.45);
-      background: rgba(37,214,255,.10);
-      color: var(--text);
-      border-radius: 8px;
-      min-height: 42px;
-      padding: 0 16px;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .hero {
-      min-height: calc(100vh - 74px);
-      padding: clamp(40px, 7vw, 84px) clamp(18px, 4vw, 56px) 34px;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
-      align-items: center;
-      gap: 44px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--green);
-      border: 1px solid rgba(65,230,166,.35);
-      background: rgba(65,230,166,.10);
-      border-radius: 999px;
-      padding: 7px 14px;
-      font-weight: 800;
-      font-size: .9rem;
-    }
-
-    h1 {
-      margin: 18px 0 18px;
-      max-width: 760px;
-      font-size: clamp(2.25rem, 5vw, 4.8rem);
-      line-height: 1.08;
-      letter-spacing: 0;
-    }
-
-    .accent-text {
-      color: var(--cyan);
-      text-shadow: 0 0 30px rgba(37,214,255,.3);
-    }
-
-    .hero p {
-      margin: 0 0 28px;
-      max-width: 680px;
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 1.08rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .primary-btn, .secondary-btn {
-      border-radius: 8px;
-      min-height: 48px;
-      padding: 0 22px;
-      cursor: pointer;
-      font-weight: 900;
-    }
-
-    .primary-btn {
-      border: 0;
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      color: #071018;
-      box-shadow: 0 18px 42px rgba(37,214,255,.22);
-    }
-
-    .secondary-btn {
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: rgba(255,255,255,.04);
-    }
-
-    .showcase {
-      min-height: 410px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-
-    .showcase img {
-      width: 100%;
-      height: 100%;
-      min-height: 410px;
-      object-fit: cover;
-      filter: saturate(1.08) contrast(1.03);
-    }
-
-    .showcase-strip {
-      position: absolute;
-      inset-inline: 18px;
-      bottom: 18px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .mini-stat {
-      background: rgba(8,9,13,.78);
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 8px;
-      padding: 12px;
-      backdrop-filter: blur(12px);
-    }
-
-    .mini-stat strong { display: block; font-size: 1.25rem; color: var(--cyan); }
-    .mini-stat span { color: var(--muted); font-size: .82rem; }
-
-    .section {
-      padding: 76px clamp(18px, 4vw, 56px);
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 22px;
-      margin-bottom: 24px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(1.8rem, 3vw, 3rem);
-      line-height: 1.2;
-    }
-
-    .section-head p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      max-width: 620px;
-      line-height: 1.8;
-    }
-
-    .tools {
-      display: grid;
-      grid-template-columns: minmax(220px, 390px) 1fr;
-      gap: 14px;
-      margin-bottom: 24px;
-    }
-
-    .search-box {
-      width: 100%;
-      min-height: 48px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 0 16px;
-      outline: none;
-    }
-
-    .search-box:focus { border-color: var(--cyan); }
-
-    .filters {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .filter {
-      min-height: 48px;
-      padding: 0 16px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .filter.active {
-      background: var(--cyan);
-      color: #071018;
-      border-color: var(--cyan);
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .product-card {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
-      border-radius: 8px;
-      overflow: hidden;
-      min-width: 0;
-      box-shadow: 0 12px 36px rgba(0,0,0,.20);
-      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(37,214,255,.48);
-      box-shadow: var(--shadow);
-    }
-
-    .product-image {
-      position: relative;
-      aspect-ratio: 4 / 3;
-      background: #0c1018;
-      overflow: hidden;
-    }
-
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .35s ease;
-    }
-
-    .product-card:hover img { transform: scale(1.05); }
-
-    .badge {
-      position: absolute;
-      top: 10px;
-      inset-inline-start: 10px;
-      background: rgba(8,9,13,.76);
-      border: 1px solid rgba(255,255,255,.18);
-      color: var(--yellow);
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-weight: 900;
-      font-size: .78rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .product-body { padding: 16px; }
-    .brand-name { color: var(--cyan); font-size: .78rem; font-weight: 900; margin-bottom: 6px; }
-
-    .product-name {
-      min-height: 52px;
-      margin: 0 0 12px;
-      font-size: 1rem;
-      line-height: 1.55;
-      font-weight: 900;
-    }
-
-    .specs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      min-height: 62px;
-      margin-bottom: 14px;
-    }
-
-    .specs span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 0 9px;
-      border-radius: 999px;
-      background: rgba(37,214,255,.10);
-      color: #cbefff;
-      font-size: .78rem;
-      font-weight: 800;
-    }
-
-    .product-foot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .price {
-      font-weight: 900;
-      color: var(--green);
-      font-size: 1.05rem;
-      white-space: nowrap;
-    }
-
-    .add-btn {
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
-      border: 0;
-      color: #071018;
-      background: linear-gradient(135deg, var(--cyan), var(--green));
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 1.25rem;
-      flex: 0 0 auto;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .feature {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      padding: 20px;
-    }
-
-    .feature strong {
-      display: block;
-      font-size: 1.05rem;
-      margin-bottom: 8px;
-      color: var(--green);
-    }
-
-    .feature span { color: var(--muted); line-height: 1.7; }
-
-    .footer {
-      border-top: 1px solid var(--line);
-      padding: 30px clamp(18px, 4vw, 56px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      color: var(--muted);
-      background: rgba(0,0,0,.18);
-      flex-wrap: wrap;
-    }
-
-    .creator {
-      color: var(--text);
-      font-weight: 900;
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      border: 1px dashed rgba(255,255,255,.2);
-      border-radius: 8px;
-      padding: 34px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    @media (max-width: 1120px) {
-      .products-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .hero { grid-template-columns: 1fr; }
-      .showcase { min-height: 340px; }
-      .showcase img { min-height: 340px; }
-    }
-
-    @media (max-width: 820px) {
-      .nav { align-items: flex-start; flex-direction: column; }
-      .nav-links { width: 100%; overflow-x: auto; padding-bottom: 4px; }
-      .tools { grid-template-columns: 1fr; }
-      .filters { justify-content: flex-start; }
-      .products-grid, .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .section-head { align-items: flex-start; flex-direction: column; }
-    }
-
-    @media (max-width: 560px) {
-      .products-grid, .features { grid-template-columns: 1fr; }
-      .showcase-strip { grid-template-columns: 1fr; }
-      .product-name, .specs { min-height: auto; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>تك ستور | أفضل اللابتوبات بأسعار تنافسية وضمان كامل</title>
+<meta name="description" content="تك ستور: 100 لابتوب وكمبيوتر وإكسسوار. 6 أقسام: ألعاب، عمل، طلاب، محترفين، سفر، ميزانية. أسعار بالجنيه المصري، ضمان حتى 3 سنوات، شحن سريع.">
+<meta name="keywords" content="لابتوب, لابتوب جيمنج, لابتوب للطلاب, MacBook, Dell, HP, Lenovo, ASUS, مصر">
+<meta property="og:title" content="تك ستور - أفضل اللابتوبات بأسعار تنافسية">
+<meta property="og:description" content="18 منتج مميز في الرئيسية + 100 منتج في الكتالوج. بحث ذكي وفلاتر متقدمة وتجربة موبايل سريعة.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0e14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"تك ستور","currenciesAccepted":"EGP","description":"متجر لابتوبات وكمبيوتر في مصر"}</script>
+<style>
+/* ===== MOBILE-FIRST ===== */
+:root{--bg:#0a0e14;--panel:#121724;--text:#f2f6fc;--muted:#a9b4c7;--line:rgba(255,255,255,.12);--blue:#2ea6ff;--cyan:#37dcff;--green:#3fe6a8;--yellow:#ffd166;--pink:#ff5c9d;--r:14px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html{scroll-behavior:smooth}
+body{margin:0;font-family:Cairo,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;padding-bottom:76px}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}img{max-width:100%;display:block}
+button{min-height:48px TouchAction:manipulation}
+.topbar{background:linear-gradient(90deg,#12395e,#0e5a8a);font-size:.82rem;font-weight:700;padding:10px 12px;text-align:center;line-height:1.6}
+/* nav + hamburger */
+.nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(10,14,20,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:1.2rem}.mark{width:40px;height:40px;display:grid;place-items:center;overflow:hidden;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--green));color:#06121c}
+.burger{background:#141b2e;border:1px solid var(--line);border-radius:10px;width:48px;height:48px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.burger span{display:block;width:22px;height:2.5px;background:#fff;border-radius:2px}
+.links{display:none;position:absolute;top:100%;inset-inline:0;background:#0d1322;border-bottom:1px solid var(--line);flex-direction:column;padding:8px 12px 14px;gap:2px}
+.links.open{display:flex}.links a{padding:14px 10px;border-radius:10px;font-weight:800;border-bottom:1px solid rgba(255,255,255,.06)}.links a:last-child{border:0}
+.nav-sp{flex:1}.cart-btn{border:1px solid rgba(55,220,255,.5);background:rgba(55,220,255,.12);color:var(--text);border-radius:10px;min-height:48px;padding:0 16px;font-weight:800;cursor:pointer;white-space:nowrap}
+/* hero */
+.hero{padding:22px 14px;display:grid;gap:18px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(63,230,168,.4);background:rgba(63,230,168,.1);color:var(--green);border-radius:999px;padding:8px 14px;font-weight:800;font-size:.85rem}
+h1{font-size:1.7rem;line-height:1.5;margin:12px 0}.acc{color:var(--cyan)}
+.lead{color:var(--muted);margin:0 0 14px;font-size:1rem}
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{min-height:52px;padding:0 18px;border-radius:12px;font-weight:900;cursor:pointer;border:0;font-size:1rem;display:inline-grid;place-items:center}.btn-p{background:linear-gradient(135deg,var(--blue),var(--green));color:#06121c}.btn-g{background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--line)}
+.search-big{width:100%;min-height:54px;border-radius:12px;border:2px solid rgba(46,166,255,.4);background:#0b111d;color:#fff;padding:0 16px;font-size:1rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;color:var(--muted);font-size:.78rem}.stats b{display:block;color:var(--text);font-size:1.1rem}
+.deal{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
+.deal-img{height:190px;background:linear-gradient(135deg,#10263f,#1b3a5f 45%,#0b3b4a);display:grid;place-items:center;position:relative}.deal-img img{width:100%;height:100%;object-fit:cover}.off{position:absolute;top:12px;inset-inline-start:12px;background:var(--pink);color:#fff;font-weight:900;border-radius:999px;padding:6px 12px;font-size:.85rem}
+.deal-body{padding:14px}.timer{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}.timer div{background:#0b111d;border:1px solid var(--line);border-radius:10px;text-align:center;padding:8px 4px;font-size:.78rem}.timer b{font-size:1.15rem;color:var(--yellow)}
+.trust{display:grid;gap:10px;padding:0 14px}.trust div{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;color:var(--muted);font-size:.92rem}.trust b{color:var(--green);display:block;margin-bottom:4px}
+.sec{padding:34px 14px}.sec-head{margin-bottom:14px}.sec-head h2{margin:6px 0;font-size:1.4rem}.sec-head p{color:var(--muted);margin:0;font-size:.95rem}
+.sec-desc{background:rgba(46,166,255,.08);border:1px solid rgba(46,166,255,.25);border-radius:12px;padding:10px 14px;color:#cdeaff;font-size:.9rem;margin-bottom:12px}
+/* product grid: 1 per row on phone */
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.pimg{aspect-ratio:3/2;background:#0c1220;position:relative}.pimg img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;top:10px;inset-inline-start:10px;background:rgba(6,10,16,.85);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:.78rem;font-weight:800;color:var(--yellow)}
+.stock{position:absolute;bottom:10px;inset-inline-start:10px;border-radius:999px;padding:4px 11px;font-size:.76rem;font-weight:800}.in{background:rgba(20,60,35,.9);color:#7dffb4;border:1px solid #2c7a4d}.low{background:rgba(70,50,10,.92);color:var(--yellow);border:1px solid #8a6d1b}.out{background:rgba(70,18,28,.92);color:#ff9aae;border:1px solid #8a2438}
+.pbody{padding:14px}.bname{color:var(--cyan);font-size:.78rem;font-weight:800}.pname{font-weight:800;margin:4px 0;font-size:1rem;line-height:1.6;min-height:0}
+.rate{color:var(--yellow);font-size:.86rem;font-weight:700}.specs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.specs span{background:rgba(46,166,255,.12);border-radius:999px;padding:5px 10px;font-size:.76rem;font-weight:700;color:#cdeaff}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.price{font-weight:900;color:var(--green);font-size:1.05rem}.old{color:var(--muted);text-decoration:line-through;font-size:.82rem;margin-inline-start:6px}
+.card-btns{display:grid;grid-template-columns:1fr 52px;gap:8px;margin-top:10px}.det{min-height:50px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer;font-weight:800}.add{min-height:50px;border-radius:10px;border:0;background:linear-gradient(135deg,var(--blue),var(--green));font-weight:900;cursor:pointer;font-size:1.2rem}.add:disabled{opacity:.4}
+.more{display:block;text-align:center;margin-top:12px;padding:14px;border:1px dashed rgba(255,255,255,.3);border-radius:12px;font-weight:800;color:var(--cyan)}
+.toolbar{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:10px;margin-bottom:10px}.toolbar input,.toolbar select{background:#0b111d;border:1px solid var(--line);color:var(--text);border-radius:10px;min-height:50px;padding:0 12px;width:100%;font-size:.95rem}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}.chip{flex:0 0 auto;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);border-radius:999px;padding:10px 18px;font-weight:800;cursor:pointer;min-height:48px}.chip.on{background:var(--cyan);color:#06121c;border-color:var(--cyan)}
+.brands{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.brands div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;font-weight:900;color:var(--muted)}
+.guide{display:grid;gap:10px}.guide article{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;line-height:1.9;color:var(--muted);font-size:.94rem}.guide h3{color:var(--text);margin:0 0 8px;font-size:1.05rem}
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}.faq summary{cursor:pointer;font-weight:800;min-height:44px}
+.policy{display:grid;gap:10px}.policy div{background:rgba(63,230,168,.06);border:1px solid rgba(63,230,168,.25);border-radius:12px;padding:14px;font-size:.9rem;color:var(--muted)}.policy b{color:var(--green)}
+footer{border-top:1px solid var(--line);padding:22px 14px 14px;color:var(--muted);font-size:.9rem}
+/* modal / drawer — full screen on mobile */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;z-index:80}.overlay.show{display:block}
+.modal{position:fixed;inset:0;z-index:90;background:#0d1322;display:none;overflow:auto;padding:14px} .modal.show{display:block}
+.mgal img.main{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid var(--line)}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0}.thumbs figure{margin:0}.thumbs img{width:100%;height:64px;object-fit:cover;border-radius:8px;border:2px solid transparent;cursor:pointer}.thumbs img.on{border-color:var(--cyan)}.thumbs figcaption{font-size:.68rem;color:var(--muted);text-align:center}
+table.spec{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0}table.spec td,table.spec th{border:1px solid var(--line);padding:10px;text-align:right}table.spec th{background:rgba(255,255,255,.05);width:120px}
+.qty{display:flex;align-items:center;gap:10px;margin:10px 0}.qty button{width:52px;height:52px;border-radius:10px;border:1px solid var(--line);background:#101829;color:#fff;cursor:pointer;font-size:1.2rem}
+.drawer{position:fixed;top:0;bottom:0;inset-inline:0;z-index:95;background:#0d1322;transform:translateY(100%);transition:.25s;padding:16px;overflow:auto;border-top:1px solid var(--line)}.drawer.show{transform:none}
+.citem{display:grid;grid-template-columns:72px 1fr auto;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}.citem img{width:72px;height:54px;object-fit:cover;border-radius:8px}
+.tot{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;line-height:2}
+.toast{position:fixed;bottom:90px;inset-inline:12px;margin:auto;width:fit-content;max-width:92vw;background:#0f2a1d;border:1px solid var(--green);color:#d8ffe9;padding:12px 20px;border-radius:999px;z-index:120;display:none;font-weight:800;text-align:center}
+.catbar{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:10px 12px;background:#0d1322;border-bottom:1px solid var(--line);overflow-x:auto}.catbar a{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.78rem;font-weight:800;color:var(--muted);min-width:76px}.catbar img{width:56px;height:56px;object-fit:cover;border-radius:50%;border:2px solid var(--line)}.sec-cover{border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-bottom:12px}.sec-cover img{width:100%;height:170px;object-fit:cover}
+ /* bottom mobile nav */
+.bottomnav{position:fixed;bottom:0;inset-inline:0;z-index:70;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(13,19,34,.97);border-top:1px solid var(--line);backdrop-filter:blur(12px)}.bottomnav a,.bottomnav button{background:none;border:0;color:var(--muted);font-weight:800;padding:12px 4px calc(10px + env(safe-area-inset-bottom));cursor:pointer;font-size:.85rem}
+/* ===== TABLET+ ===== */
+@media(min-width:700px){
+body{padding-bottom:0}.bottomnav{display:none}.burger{display:none}.links{display:flex!important;position:static;flex-direction:row;background:none;border:0;padding:0;gap:16px}.links a{border:0;padding:8px 4px;color:var(--muted)}
+.hero{grid-template-columns:1.05fr .95fr;padding:40px clamp(16px,4vw,56px);align-items:center}h1{font-size:2.6rem}
+.grid{grid-template-columns:repeat(2,1fr)}.trust{grid-template-columns:repeat(4,1fr);padding:0 clamp(16px,4vw,56px)}.sec{padding:44px clamp(16px,4vw,56px)}
+.toolbar{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr}.guide{grid-template-columns:repeat(3,1fr)}.brands{grid-template-columns:repeat(6,1fr)}
+.modal{inset:4vh 4vw;border:1px solid var(--line);border-radius:16px;max-width:1080px;margin:auto}.drawer{inset-inline-end:0;inset-inline-start:auto;width:min(430px,94vw);transform:translateX(-110%);border:1px solid var(--line);top:0;bottom:0}[dir="rtl"] .drawer{transform:translateX(-110%)}[dir="rtl"] .drawer.show{transform:none}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+}
+@media(min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
 </head>
 <body>
-  <header class="nav">
-    <a href="#" class="brand" aria-label="تك ستور">
-      <span class="brand-mark">⚡</span>
-      <span>تك ستور</span>
-    </a>
-    <nav class="nav-links" aria-label="روابط الموقع">
-      <a href="#products">المنتجات</a>
-      <a href="#laptops">لابتوبات</a>
-      <a href="#desktops">كمبيوتر</a>
-      <a href="#accessories">اكسسوارات</a>
-      <a href="#features">الخدمات</a>
-    </nav>
-    <button class="cart-btn" type="button" id="cartBtn">السلة 0</button>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div>
-        <span class="eyebrow">تشكيلة تقنية كاملة في مكان واحد</span>
-        <h1>100 منتج من <span class="accent-text">اللابتوبات والكمبيوتر والاكسسوارات</span> بتجربة تسوق سريعة ومميزة.</h1>
-        <p>تصفح منتجات مختارة للألعاب، الشغل، الدراسة، وصناعة المحتوى مع صور واضحة، بحث فوري، تصنيفات ذكية، وأسعار بالجنيه المصري.</p>
-        <div class="hero-actions">
-          <a class="primary-btn" href="#products">تصفح المنتجات</a>
-          <a class="secondary-btn" href="#features">مميزات المتجر</a>
-        </div>
-      </div>
-      <div class="showcase" aria-label="صورة أجهزة تقنية">
-        <img id="heroImage" src="" alt="لابتوب وأجهزة تقنية حديثة">
-        <div class="showcase-strip">
-          <div class="mini-stat"><strong>40</strong><span>لابتوب</span></div>
-          <div class="mini-stat"><strong>30</strong><span>كمبيوتر مكتبي</span></div>
-          <div class="mini-stat"><strong>30</strong><span>اكسسوار</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="products">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">كل المنتجات</span>
-          <h2>كتالوج تك ستور</h2>
-          <p>استخدم البحث أو التصنيفات للوصول بسرعة للمنتج المناسب. عدد المنتجات المعروضة يتغير فوراً حسب اختيارك.</p>
-        </div>
-        <strong id="resultCount">100 منتج</strong>
-      </div>
-
-      <div class="tools">
-        <input id="searchInput" class="search-box" type="search" placeholder="ابحث باسم المنتج أو الماركة أو المواصفات..." aria-label="بحث المنتجات">
-        <div class="filters" aria-label="تصنيفات المنتجات">
-          <button class="filter active" type="button" data-category="all">الكل</button>
-          <button class="filter" type="button" data-category="laptop" id="laptops">لابتوبات</button>
-          <button class="filter" type="button" data-category="desktop" id="desktops">كمبيوتر مكتبي</button>
-          <button class="filter" type="button" data-category="accessory" id="accessories">اكسسوارات</button>
-          <button class="filter" type="button" data-category="gaming">جيمينج</button>
-        </div>
-      </div>
-
-      <div class="products-grid" id="productsGrid"></div>
-    </section>
-
-    <section class="section" id="features">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow">خدمة تليق بأجهزتك</span>
-          <h2>ليه تك ستور مختلف؟</h2>
-        </div>
-      </div>
-      <div class="features">
-        <div class="feature"><strong>ضمان حقيقي</strong><span>ضمان يصل إلى 3 سنوات على الأجهزة الأساسية مع دعم فني واضح.</span></div>
-        <div class="feature"><strong>توصيل سريع</strong><span>تجهيز وشحن للطلبات داخل مصر مع متابعة حالة الطلب.</span></div>
-        <div class="feature"><strong>اختيارات كثيرة</strong><span>100 منتج بين أجهزة قوية واكسسوارات عملية لمختلف الاستخدامات.</span></div>
-        <div class="feature"><strong>تجربة سهلة</strong><span>بحث وتصفية وسلة بسيطة تساعد الزائر يوصل لقراره بسرعة.</span></div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <span>© 2026 تك ستور - جميع الحقوق محفوظة</span>
-    <span class="creator">Created by : Bassem Ahmed</span>
-  </footer>
-
-  <script>
-    const imageSets = {
-      laptop: [
-        "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1484788984921-03950022c9ef?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=900&q=80"
-      ],
-      desktop: [
-        "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1555617981-dac3880eac6e?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1593640495253-23196b27a87f?auto=format&fit=crop&w=900&q=80"
-      ],
-      accessory: [
-        "https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1619953942547-233eab5a70d6?auto=format&fit=crop&w=900&q=80",
-        "https://images.unsplash.com/photo-1625842268584-8f3296236761?auto=format&fit=crop&w=900&q=80"
-      ]
-    };
-
-    const laptops = [
-      ["Apple", "MacBook Pro M3 14", ["M3 Pro", "18GB RAM", "512GB SSD"], 45999],
-      ["Apple", "MacBook Air M2 13", ["M2", "8GB RAM", "256GB SSD"], 28999],
-      ["Dell", "XPS 15 9530", ["Core i7", "32GB RAM", "1TB SSD"], 38500],
-      ["Dell", "Inspiron 16 Plus", ["Core i7", "16GB RAM", "RTX 4060"], 33999],
-      ["HP", "Spectre x360 14", ["Core Ultra 7", "16GB RAM", "OLED"], 36500],
-      ["HP", "Victus 16 Gaming", ["Ryzen 7", "RTX 4060", "144Hz"], 31200],
-      ["Lenovo", "ThinkPad X1 Carbon", ["Core i7", "16GB RAM", "1TB SSD"], 42900],
-      ["Lenovo", "Legion 5 Pro", ["Ryzen 7", "RTX 4070", "165Hz"], 52900],
-      ["ASUS", "ROG Strix G16", ["Core i9", "RTX 4070", "240Hz"], 55000],
-      ["ASUS", "Zenbook 14 OLED", ["Core Ultra 5", "16GB RAM", "OLED"], 28400],
-      ["Acer", "Swift Go 14", ["Core i5", "16GB RAM", "512GB SSD"], 22900],
-      ["Acer", "Predator Helios Neo", ["Core i7", "RTX 4060", "165Hz"], 46800],
-      ["MSI", "Stealth 16 Studio", ["Core i7", "RTX 4070", "QHD"], 58900],
-      ["MSI", "Modern 15", ["Core i5", "16GB RAM", "512GB SSD"], 21900],
-      ["Microsoft", "Surface Laptop Studio 2", ["Core i7", "RTX 4060", "Touch"], 48500],
-      ["Samsung", "Galaxy Book4 Pro", ["Core Ultra 7", "16GB RAM", "AMOLED"], 39900],
-      ["Huawei", "MateBook 14", ["Core i5", "16GB RAM", "2K Display"], 24900],
-      ["Gigabyte", "Aorus 15", ["Core i7", "RTX 4070", "Gaming"], 51900],
-      ["Razer", "Blade 15", ["Core i7", "RTX 4060", "CNC Body"], 66900],
-      ["LG", "Gram 16", ["Core i7", "16GB RAM", "خفيف"], 37400],
-      ["Apple", "MacBook Pro M3 Max 16", ["M3 Max", "36GB RAM", "1TB SSD"], 89900],
-      ["Dell", "Latitude 7440", ["Core i7", "16GB RAM", "Business"], 34400],
-      ["HP", "EliteBook 840 G10", ["Core i7", "16GB RAM", "Security"], 32700],
-      ["Lenovo", "Yoga Slim 7", ["Ryzen 7", "16GB RAM", "OLED"], 29200],
-      ["ASUS", "TUF Gaming A15", ["Ryzen 7", "RTX 4050", "144Hz"], 34800],
-      ["Acer", "Aspire 7", ["Core i5", "RTX 3050", "512GB SSD"], 27900],
-      ["MSI", "Katana 15", ["Core i7", "RTX 4060", "Gaming"], 38900],
-      ["Samsung", "Galaxy Book4 360", ["Core 7", "Touch", "Convertible"], 35900],
-      ["Huawei", "MateBook D16", ["Core i5", "16GB RAM", "16 inch"], 23600],
-      ["LG", "UltraPC 15", ["Ryzen 5", "16GB RAM", "512GB SSD"], 21400],
-      ["Dell", "G15 Gaming", ["Core i7", "RTX 4060", "120Hz"], 37400],
-      ["HP", "Omen Transcend 14", ["Core Ultra 7", "RTX 4060", "OLED"], 58900],
-      ["Lenovo", "IdeaPad Slim 5", ["Ryzen 5", "16GB RAM", "1TB SSD"], 23900],
-      ["ASUS", "Vivobook S15", ["Core Ultra 5", "16GB RAM", "OLED"], 26900],
-      ["Acer", "Nitro V 15", ["Core i5", "RTX 4050", "144Hz"], 31900],
-      ["MSI", "Prestige 14", ["Core i7", "32GB RAM", "Creator"], 44900],
-      ["Microsoft", "Surface Laptop 6", ["Core Ultra 7", "16GB RAM", "Touch"], 41900],
-      ["Gigabyte", "G5 KF", ["Core i5", "RTX 4060", "Gaming"], 33900],
-      ["Razer", "Blade 14", ["Ryzen 9", "RTX 4070", "QHD"], 74900],
-      ["Apple", "MacBook Air M3 15", ["M3", "16GB RAM", "512GB SSD"], 42900]
-    ];
-
-    const desktops = [
-      ["Dell", "OptiPlex 7010 Tower", ["Core i7", "16GB RAM", "512GB SSD"], 27500],
-      ["HP", "Elite Tower 800 G9", ["Core i7", "32GB RAM", "Business"], 34900],
-      ["Lenovo", "ThinkCentre M90t", ["Core i7", "16GB RAM", "1TB SSD"], 31800],
-      ["Apple", "Mac mini M2", ["M2", "8GB RAM", "256GB SSD"], 24900],
-      ["Apple", "Mac Studio M2 Max", ["M2 Max", "32GB RAM", "Creator"], 82900],
-      ["ASUS", "ROG G22CH", ["Core i7", "RTX 4070", "Gaming"], 64500],
-      ["MSI", "Aegis RS", ["Core i9", "RTX 4080", "32GB RAM"], 95900],
-      ["Acer", "Predator Orion 5000", ["Core i7", "RTX 4070 Ti", "Gaming"], 84900],
-      ["HP", "Omen 45L", ["Core i9", "RTX 4090", "Liquid"], 129900],
-      ["Dell", "Alienware Aurora R16", ["Core i9", "RTX 4080", "32GB RAM"], 109900],
-      ["Lenovo", "Legion Tower 5", ["Ryzen 7", "RTX 4070", "Gaming"], 67900],
-      ["Intel", "NUC 13 Pro", ["Core i7", "Mini PC", "Wi-Fi 6E"], 21900],
-      ["Beelink", "SER7 Mini PC", ["Ryzen 7", "32GB RAM", "1TB SSD"], 26500],
-      ["Zotac", "Magnus One", ["Core i7", "RTX 3070", "Compact"], 58500],
-      ["Corsair", "Vengeance i7400", ["Core i7", "RTX 4080", "RGB"], 112000],
-      ["Cooler Master", "MasterBox Build", ["Ryzen 5", "RTX 4060", "Gaming"], 39500],
-      ["NZXT", "Player Two", ["Ryzen 7", "RTX 4070", "White"], 71900],
-      ["Thermaltake", "View 270 Build", ["Core i5", "RTX 4060", "RGB"], 42900],
-      ["Gigabyte", "Aorus Model S", ["Core i7", "RTX 4070", "Silent"], 73900],
-      ["ASRock", "DeskMini X300", ["Ryzen 5", "Mini PC", "Fast SSD"], 17900],
-      ["Dell", "Precision 3660", ["Core i9", "RTX A2000", "Workstation"], 89900],
-      ["HP", "Z2 Tower G9", ["Core i9", "NVIDIA T1000", "CAD"], 85900],
-      ["Lenovo", "ThinkStation P3", ["Core i7", "RTX A4000", "Workstation"], 97500],
-      ["MSI", "Creator P100X", ["Core i7", "RTX 4070", "Creator"], 78800],
-      ["Acer", "Aspire TC", ["Core i5", "8GB RAM", "512GB SSD"], 18900],
-      ["HP", "Pavilion Desktop", ["Ryzen 5", "16GB RAM", "1TB SSD"], 22400],
-      ["Dell", "Inspiron Desktop", ["Core i5", "16GB RAM", "512GB SSD"], 21900],
-      ["Lenovo", "IdeaCentre 5", ["Ryzen 5", "16GB RAM", "Wi-Fi"], 20500],
-      ["ASUS", "ExpertCenter D7", ["Core i7", "16GB RAM", "Business"], 29900],
-      ["Custom", "RTX Creator Pro", ["Core i9", "RTX 4070 Ti", "64GB RAM"], 104900]
-    ];
-
-    const accessories = [
-      ["Logitech", "MX Master 3S Mouse", ["Wireless", "8K DPI", "Silent"], 4200],
-      ["Logitech", "MX Keys Keyboard", ["Wireless", "Backlit", "Arabic"], 5200],
-      ["Razer", "DeathAdder V3", ["Gaming", "30K DPI", "Light"], 3900],
-      ["Razer", "BlackWidow V4", ["Mechanical", "RGB", "Gaming"], 7400],
-      ["SteelSeries", "Arctis Nova 7", ["Wireless", "Surround", "Gaming"], 8600],
-      ["HyperX", "Cloud III Headset", ["DTS", "Mic", "Comfort"], 4300],
-      ["Samsung", "T7 Shield 1TB", ["Portable SSD", "USB-C", "Rugged"], 5600],
-      ["SanDisk", "Extreme Pro 2TB", ["Portable SSD", "2000MB/s", "USB-C"], 9800],
-      ["Anker", "PowerExpand Hub", ["USB-C", "HDMI", "7-in-1"], 3100],
-      ["Anker", "737 Power Bank", ["24000mAh", "140W", "USB-C"], 7200],
-      ["Belkin", "Thunderbolt 4 Dock", ["12 Ports", "4K", "PD"], 12900],
-      ["Ugreen", "GaN Charger 100W", ["4 Ports", "PD", "Compact"], 3400],
-      ["Dell", "UltraSharp U2723QE", ["27 inch", "4K", "USB-C"], 24500],
-      ["LG", "UltraGear 27GP850", ["27 inch", "165Hz", "QHD"], 18200],
-      ["Samsung", "Odyssey G5", ["32 inch", "165Hz", "Curved"], 16900],
-      ["ASUS", "ProArt PA278QV", ["27 inch", "IPS", "Creator"], 15500],
-      ["Elgato", "Stream Deck MK.2", ["15 Keys", "Studio", "USB-C"], 6900],
-      ["Elgato", "Facecam Neo", ["1080p", "USB", "Streaming"], 5200],
-      ["Blue", "Yeti USB Mic", ["Podcast", "USB", "Studio"], 6500],
-      ["Logitech", "Brio 4K Webcam", ["4K", "HDR", "Windows Hello"], 7800],
-      ["Cooler Master", "Notepal X3", ["Laptop Cooler", "Fan", "RGB"], 1900],
-      ["TP-Link", "Archer AX73", ["Wi-Fi 6", "Router", "5400Mbps"], 5100],
-      ["Synology", "BeeDrive 1TB", ["Backup", "SSD", "USB-C"], 6400],
-      ["Kingston", "Fury Beast 32GB", ["DDR5", "5600MHz", "Kit"], 4900],
-      ["Crucial", "P5 Plus 1TB", ["NVMe", "Gen4", "SSD"], 4400],
-      ["NVIDIA", "RTX 4070 Super", ["12GB", "Ray Tracing", "Gaming"], 38900],
-      ["AMD", "Ryzen 7 7800X3D", ["8 Cores", "Gaming", "AM5"], 18900],
-      ["Intel", "Core i7-14700K", ["20 Cores", "LGA1700", "Unlocked"], 21900],
-      ["Corsair", "RM850x PSU", ["850W", "Gold", "Modular"], 6200],
-      ["NZXT", "H6 Flow Case", ["ATX", "Airflow", "Tempered"], 6900]
-    ];
-
-    const products = [
-      ...laptops.map((item, index) => makeProduct(item, index, "laptop")),
-      ...desktops.map((item, index) => makeProduct(item, index, "desktop")),
-      ...accessories.map((item, index) => makeProduct(item, index, "accessory"))
-    ];
-
-    let activeCategory = "all";
-    let cartCount = 0;
-
-    const grid = document.getElementById("productsGrid");
-    const resultCount = document.getElementById("resultCount");
-    const searchInput = document.getElementById("searchInput");
-    const cartBtn = document.getElementById("cartBtn");
-
-    function makeProduct(item, index, category) {
-      const [brand, name, specs, price] = item;
-      const isGaming = specs.join(" ").toLowerCase().includes("gaming") || specs.join(" ").includes("RTX") || name.toLowerCase().includes("rog") || name.toLowerCase().includes("omen");
-      const badges = ["جديد", "عرض", "الأكثر مبيعاً", "اختيار ممتاز"];
-      return {
-        id: `${category}-${index + 1}`,
-        brand,
-        name,
-        specs,
-        price,
-        category,
-        gaming: isGaming,
-        badge: badges[index % badges.length],
-        image: productImage(category, brand, name, index)
-      };
-    }
-
-    function productImage(category, brand, name, index) {
-      const palettes = [
-        ["#25d6ff", "#41e6a6", "#0b1220"],
-        ["#ff4f9a", "#ffd166", "#111827"],
-        ["#8b5cf6", "#22d3ee", "#101827"],
-        ["#f97316", "#14b8a6", "#0f172a"],
-        ["#60a5fa", "#f472b6", "#111827"]
-      ];
-      const [a, b, bg] = palettes[index % palettes.length];
-      const icon = {
-        laptop: `
-          <rect x="160" y="120" width="500" height="300" rx="26" fill="#101827" stroke="${a}" stroke-width="8"/>
-          <rect x="188" y="150" width="444" height="238" rx="14" fill="url(#screen)"/>
-          <path d="M105 455h610l-54 70H159z" fill="#d7dde8"/>
-          <path d="M250 475h360l-24 28H274z" fill="#7dd3fc"/>
-        `,
-        desktop: `
-          <rect x="95" y="115" width="430" height="290" rx="18" fill="#111827" stroke="${a}" stroke-width="8"/>
-          <rect x="128" y="148" width="364" height="214" rx="12" fill="url(#screen)"/>
-          <rect x="570" y="105" width="135" height="360" rx="22" fill="#151b29" stroke="${b}" stroke-width="8"/>
-          <circle cx="637" cy="395" r="18" fill="${a}"/>
-          <path d="M285 405h55v60h105v42H180v-42h105z" fill="#cbd5e1"/>
-        `,
-        accessory: `
-          <rect x="160" y="130" width="450" height="250" rx="34" fill="#111827" stroke="${a}" stroke-width="8"/>
-          <path d="M210 300h350" stroke="${b}" stroke-width="26" stroke-linecap="round"/>
-          <circle cx="260" cy="210" r="48" fill="${a}"/>
-          <circle cx="385" cy="210" r="48" fill="${b}"/>
-          <circle cx="510" cy="210" r="48" fill="#f8fafc"/>
-          <rect x="250" y="420" width="270" height="46" rx="23" fill="#d7dde8"/>
-        `
-      }[category];
-
-      const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="${bg}"/>
-              <stop offset=".55" stop-color="#182033"/>
-              <stop offset="1" stop-color="${a}"/>
-            </linearGradient>
-            <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="${a}"/>
-              <stop offset="1" stop-color="${b}"/>
-            </linearGradient>
-            <filter id="glow"><feGaussianBlur stdDeviation="12" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <rect width="900" height="675" fill="url(#bg)"/>
-          <circle cx="735" cy="115" r="115" fill="${b}" opacity=".18"/>
-          <circle cx="125" cy="540" r="150" fill="${a}" opacity=".14"/>
-          <g transform="translate(70 45)" filter="url(#glow)">${icon}</g>
-          <text x="54" y="575" fill="#f8fafc" font-family="Arial, sans-serif" font-size="46" font-weight="800">${escapeSvg(brand)}</text>
-          <text x="54" y="622" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="27" font-weight="700">${escapeSvg(name).slice(0, 34)}</text>
-        </svg>`;
-
-      return `data:image/svg+xml;base64,${toBase64(svg)}`;
-    }
-
-    function escapeSvg(text) {
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-    }
-
-    function toBase64(text) {
-      return btoa(unescape(encodeURIComponent(text)));
-    }
-
-    function formatPrice(value) {
-      return `${value.toLocaleString("ar-EG")} ج.م`;
-    }
-
-    function renderProducts() {
-      const term = searchInput.value.trim().toLowerCase();
-      const filtered = products.filter(product => {
-        const categoryMatch = activeCategory === "all" || product.category === activeCategory || (activeCategory === "gaming" && product.gaming);
-        const searchable = `${product.brand} ${product.name} ${product.specs.join(" ")}`.toLowerCase();
-        return categoryMatch && searchable.includes(term);
-      });
-
-      resultCount.textContent = `${filtered.length.toLocaleString("ar-EG")} منتج`;
-
-      if (!filtered.length) {
-        grid.innerHTML = `<div class="empty">لا توجد منتجات مطابقة للبحث الحالي.</div>`;
-        return;
-      }
-
-      grid.innerHTML = filtered.map(product => `
-        <article class="product-card">
-          <div class="product-image">
-            <img src="${product.image}" alt="${product.name}" decoding="async">
-            <span class="badge">${product.badge}</span>
-          </div>
-          <div class="product-body">
-            <div class="brand-name">${product.brand}</div>
-            <h3 class="product-name">${product.name}</h3>
-            <div class="specs">${product.specs.map(spec => `<span>${spec}</span>`).join("")}</div>
-            <div class="product-foot">
-              <div class="price">${formatPrice(product.price)}</div>
-              <button class="add-btn" type="button" aria-label="أضف ${product.name} إلى السلة" data-id="${product.id}">+</button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    document.querySelectorAll(".filter").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
-        activeCategory = button.dataset.category;
-        renderProducts();
-      });
-    });
-
-    searchInput.addEventListener("input", renderProducts);
-
-    grid.addEventListener("click", event => {
-      const button = event.target.closest(".add-btn");
-      if (!button) return;
-      cartCount += 1;
-      cartBtn.textContent = `السلة ${cartCount.toLocaleString("ar-EG")}`;
-      button.textContent = "✓";
-      window.setTimeout(() => {
-        button.textContent = "+";
-      }, 750);
-    });
-
-    document.getElementById("heroImage").src = productImage("laptop", "Tech Store", "Laptops, PCs & Accessories", 6);
-    renderProducts();
-  </script>
+<div class="topbar"> عرض الأسبوع: خصم حتى 25% على الجيمنج + شحن مجاني فوق 20,000 ج.م دفع آمن 100%</div>
+<header class="nav">
+<button class="burger" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="القائمة"><span></span><span></span><span></span></button>
+<a class="brand" href="#top"><span class="mark"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=100&q=60" alt="تك ستور" style="width:100%;height:100%;object-fit:cover"></span> تك ستور</a>
+<nav class="links">
+<a href="#home-sec" onclick="closeMenu()">الرئيسية</a><a href="#catalog" onclick="closeMenu()">الأقسام</a><a href="#deals" onclick="closeMenu()">العروض</a><a href="#catalog" onclick="closeMenu()">الكتالوج</a><a href="#brands" onclick="closeMenu()">الماركات</a><a href="#faq" onclick="closeMenu()">الأسئلة الشائعة</a>
+</nav>
+<span class="nav-sp"></span>
+<button class="cart-btn" id="cartBtn">السلة (0)</button>
+</header>
+<nav class="catbar" aria-label="أقسام اللابتوبات">
+<a href="#catalog" onclick="goSection('gaming')"><img loading="lazy" src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=200&q=60" alt="لابتوبات الألعاب"><span>الألعاب</span></a>
+<a href="#catalog" onclick="goSection('work')"><img loading="lazy" src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=200&q=60" alt="لابتوبات العمل"><span>العمل</span></a>
+<a href="#catalog" onclick="goSection('study')"><img loading="lazy" src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=200&q=60" alt="لابتوبات الطلاب"><span>الطلاب</span></a>
+<a href="#catalog" onclick="goSection('pro')"><img loading="lazy" src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=200&q=60" alt="لابتوبات المحترفين"><span>المحترفين</span></a>
+<a href="#catalog" onclick="goSection('travel')"><img loading="lazy" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=200&q=60" alt="أسفار خفيفة"><span>سفر خفيف</span></a>
+<a href="#catalog" onclick="goSection('budget')"><img loading="lazy" src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?auto=format&fit=crop&w=200&q=60" alt="ميزانية محدودة"><span>ميزانية</span></a>
+</nav>
+<main id="top">
+<!-- 1+2: hero + search -->
+<section class="hero" id="home-sec">
+<div>
+<span class="eyebrow"> أفضل اللابتوبات بأسعار تنافسية وضمان كامل</span>
+<h1>لابتوبك المناسب <span class="acc">للألعاب والشغل والدراسة</span> في مكان واحد</h1>
+<p class="lead">تنوع حقيقي، أسعار واضحة بالجنيه المصري، صور حقيقية، بحث ذكي وفلاتر متقدمة، وتجربة موبايل سريعة وخفيفة.</p>
+<input id="qTop" class="search-big" placeholder=" دوّر على لابتوب… (مثال: Legion / RTX 4060 / OLED)" oninput="document.getElementById('q').value=this.value;render()">
+<div class="cta" style="margin-top:12px"><a class="btn btn-p" href="#home-picks">تسوق الآن</a><a class="btn btn-g" href="#deals">اكتشف العروض</a></div>
+<div class="stats" style="margin-top:14px"><div><b>100+</b>منتج</div><div><b>3 سنين</b>ضمان</div><div><b>24 س</b>تجهيز</div><div><b>4.8</b>تقييم</div></div>
+</div>
+<div class="deal">
+<div class="deal-img"><span class="off">خصم حتى 25%</span><img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=800&q=60" alt="عرض لابتوبات الجيمنج" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+<div class="deal-body"><b>عرض ROG & Legion الأسبوعي</b>
+<div class="timer"><div><b id="d">02</b><br>يوم</div><div><b id="h">11</b><br>ساعة</div><div><b id="m">45</b><br>دقيقة</div><div><b id="s">30</b><br>ثانية</div></div>
+<button class="btn btn-p" style="width:100%" onclick="goSection('gaming')">تسوق عروض الجيمنج </button></div>
+</div>
+</section>
+<section class="trust">
+<div><b> ضمان حقيقي</b> حتى 3 سنوات + دعم فني وفاتورة معتمدة.</div>
+<div><b> توصيل سريع</b> تجهيز 24 ساعة وشحن لكل المحافظات.</div>
+<div><b> دفع آمن SSL</b> كاش عند الاستلام أو انستاباي/بطاقة.</div>
+<div><b> إرجاع 14 يوم</b> استبدال فوري لعيوب الصناعة.</div>
+</section>
+<!-- 4: homepage 18 products -->
+<div id="home-picks"></div>
+<!-- deals -->
+<section class="sec" id="deals"><div class="sec-head"><span class="eyebrow"> العروض</span><h2>خصومات الأسبوع الحالي</h2><p>أكبر نسب خصم في المتجر — الكمية محدودة.</p></div><div class="grid" id="dealRow"></div></section>
+<!-- catalog -->
+<section class="sec" id="catalog" style="padding-top:0">
+<div class="sec-head"><span class="eyebrow"> الكتالوج الكامل</span><h2>كل المنتجات (100)</h2><p>بحث ذكي + فلاتر: القسم، الماركة، المعالج، الرام، السعر، والترتيب.</p></div>
+<div class="toolbar">
+<input id="q" placeholder=" ابحث بالاسم أو المواصفات..." oninput="render()">
+<select id="fSec" onchange="render()"><option value="all">كل الأقسام (6)</option><option value="gaming"> ألعاب</option><option value="work"> عمل</option><option value="study"> طلاب</option><option value="pro"> محترفين</option><option value="travel"> سفر خفيف</option><option value="budget"> ميزانية</option><option value="desktop"> كمبيوتر مكتبي</option><option value="accessory"> اكسسوار</option></select>
+<select id="fBrand" onchange="render()"><option value="all">كل الماركات</option></select>
+<select id="fCpu" onchange="render()"><option value="all">كل المعالجات</option><option>Apple M</option><option>Core i7</option><option>Core i5</option><option>Core i9</option><option>Ryzen</option><option>Core Ultra</option></select>
+<select id="fRam" onchange="render()"><option value="all">كل الرامات</option><option value="8">8GB</option><option value="16">16GB</option><option value="32">32GB+</option></select>
+</div>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;color:var(--muted)">السعر حتى: <input type="range" id="fPrice" min="1500" max="130000" step="1000" value="130000" oninput="render()" style="flex:1;min-height:48px"> <b id="pLbl" style="color:var(--green)">130K</b>
+<select id="fSort" onchange="render()" style="background:#0b111d;border:1px solid var(--line);color:#fff;border-radius:10px;min-height:48px;padding:0 10px"><option value="pop">الأكثر مبيعاً</option><option value="cheap">الأرخص أولاً</option><option value="exp">الأغلى أولاً</option><option value="rate">الأعلى تقييماً</option><option value="disc">أكبر خصم</option></select>
+<button class="chip" onclick="clearF()"> مسح</button></div>
+<div class="chips" id="chipRow"></div>
+<p style="color:var(--muted)" id="count"></p>
+<div class="grid" id="grid"></div>
+<div id="moreWrap" style="text-align:center;margin-top:14px"><button class="btn btn-g" style="width:100%" onclick="moreProducts()">عرض المزيد</button></div>
+</section>
+<section class="sec" id="brands" style="padding-top:0"><div class="sec-head"><span class="eyebrow"> الماركات</span><h2>ماركات موثوقة 100%</h2></div><div class="brands"><div>Apple</div><div>Dell</div><div>HP</div><div>Lenovo</div><div>ASUS</div><div>MSI</div></div></section>
+<section class="sec faq" id="faq" style="padding-top:0"><div class="sec-head"><span class="eyebrow"> الأسئلة الشائعة</span><h2>عندك سؤال؟</h2></div>
+<details open><summary>الضمان قد إيه؟</summary><p style="color:var(--muted)">اللابتوبات والكمبيوتر حتى 3 سنوات، الاكسسوارات سنة. استبدال 14 يوم لعيب مصنعي + فاتورة معتمدة.</p></details>
+<details><summary>الشحن بكام وبياخد قد إيه؟</summary><p style="color:var(--muted)">تجهيز 24 ساعة. شحن 150 ج.م ومجاني فوق 20,000 ج.م. كل المحافظات.</p></details>
+<details><summary>الدفع آمن؟</summary><p style="color:var(--muted)">أيوه، الموقع مؤمن بشهادة SSL. الدفع كاش عند الاستلام أو انستاباي/محفظة/بطاقة.</p></details>
+<details><summary>سياسة الاسترجاع؟</summary><p style="color:var(--muted)">فحص عند الاستلام + استرجاع/استبدال 14 يوم بحالته الأصلية لعيوب الصناعة.</p></details>
+</section>
+<section class="sec" id="policy" style="padding-top:0"><div class="sec-head"><span class="eyebrow"> الثقة والأمان</span><h2>سياسات واضحة</h2></div>
+<div class="policy"><div><b> الخصوصية:</b> بياناتك للطلب فقط، لا مشاركة مع طرف ثالث، واتصال مشفر SSL.</div><div><b> الاسترجاع:</b> 14 يوم استبدال لعيوب الصناعة مع الفاتورة والعلبة.</div><div><b> الشحن:</b> 150 ج.م، مجاني فوق 20 ألف. معاينة قبل الدفع.</div><div><b> الضمان:</b> حتى 3 سنوات + دعم فني واتساب/تليفون.</div></div></section>
+</main>
+<footer><div>© 2026 تك ستور - جميع الحقوق محفوظة | Created by : Bassem Ahmed</div><div style="margin-top:6px">SSL | أسعار شاملة ضريبة 14% | توصيل لكل مصر</div></footer>
+<nav class="bottomnav"><a href="#home-sec"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><br>الرئيسية</a><a href="#catalog"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><br>بحث</a><button onclick="openCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M2 3h3l2.6 12.5h11.2l2-8H6"/></svg><br>السلة (<span id="bCount">0</span>)</button></nav>
+<div class="overlay" id="ov" onclick="closeAll()"></div>
+<div class="modal" id="pModal"></div>
+<div class="modal" id="coModal" style="max-width:640px;margin:auto"></div>
+<aside class="drawer" id="drawer"><h3 style="margin:0 0 12px"> سلة المشتريات</h3><div id="cItems"></div><div class="tot" id="cTot"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><button class="btn btn-p" onclick="openCheckout()">الدفع </button><button class="btn btn-g" onclick="orderWA()">واتساب </button></div>
+<button class="btn btn-g" style="width:100%;margin-top:8px" onclick="closeAll()">متابعة التسوق</button></aside>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== صور حقيقية (Unsplash, w=800,q=60 → أقل من 300KB) ===== */
+const LAP=["photo-1496181133206-80ce9b88a853","photo-1517336714731-489689fd1ca8","photo-1593642702821-c8da6771f0c6","photo-1588872657578-7efd1f1555ed","photo-1541807084-5c52b6b3adef","photo-1603302576837-37561b2e2302","photo-1588702547923-7093a6c3ba33","photo-1593642632823-8f785ba67e45","photo-1531297484001-80022131f5a1","photo-1525547719571-a2d4ac4d4a97","photo-1611186871348-b1ce696e52c9","photo-1544099858-75feeb57f01b"];
+const DSK=["photo-1593640408182-31c70c8268f5","photo-1587202372775-e229f172b9d7","photo-1587831990711-23ca6441447b","photo-1555617981-dac3880eac6e"];
+const ACC=["photo-1527814050087-3793815479db","photo-1615663245857-ac93bb7c39e7","photo-1618366712010-f4ae9c647dcb","photo-1505740420928-5e560c06d30e"];
+const U=(id,w)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w||800}&q=60`;
+const LBL=["الواجهة الأمامية","الزاوية الجانبية","لوحة المفاتيح والشاشة","أثناء الاستخدام"];
+function gal(cat,i){const pool=cat==="laptop"?LAP:cat==="desktop"?DSK:ACC;return [0,1,2,3].map(k=>U(pool[(i+k*3)%pool.length],k===0?800:800))}
+/* ===== البيانات ===== */
+const L=[["Apple","MacBook Pro M3 14",["M3 Pro","18GB RAM","512GB SSD"],45999],["Apple","MacBook Air M2 13",["M2","8GB RAM","256GB SSD"],28999],["Dell","XPS 15 9530",["Core i7","32GB RAM","1TB SSD"],38500],["Dell","Inspiron 16 Plus",["Core i7","16GB RAM","RTX 4060"],33999],["HP","Spectre x360 14",["Core Ultra 7","16GB RAM","OLED"],36500],["HP","Victus 16 Gaming",["Ryzen 7","RTX 4060","144Hz"],31200],["Lenovo","ThinkPad X1 Carbon",["Core i7","16GB RAM","1TB SSD"],42900],["Lenovo","Legion 5 Pro",["Ryzen 7","RTX 4070","165Hz"],52900],["ASUS","ROG Strix G16",["Core i9","RTX 4070","240Hz"],55000],["ASUS","Zenbook 14 OLED",["Core Ultra 5","16GB RAM","OLED"],28400],["Acer","Swift Go 14",["Core i5","16GB RAM","512GB SSD"],22900],["Acer","Predator Helios Neo",["Core i7","RTX 4060","165Hz"],46800],["MSI","Stealth 16 Studio",["Core i7","RTX 4070","QHD"],58900],["MSI","Modern 15",["Core i5","16GB RAM","512GB SSD"],21900],["Microsoft","Surface Laptop Studio 2",["Core i7","RTX 4060","Touch"],48500],["Samsung","Galaxy Book4 Pro",["Core Ultra 7","16GB RAM","AMOLED"],39900],["Huawei","MateBook 14",["Core i5","16GB RAM","2K Display"],24900],["Gigabyte","Aorus 15",["Core i7","RTX 4070","Gaming"],51900],["Razer","Blade 15",["Core i7","RTX 4060","CNC Body"],66900],["LG","Gram 16",["Core i7","16GB RAM","خفيف 1.1kg"],37400],["Apple","MacBook Pro M3 Max 16",["M3 Max","36GB RAM","1TB SSD"],89900],["Dell","Latitude 7440",["Core i7","16GB RAM","Business"],34400],["HP","EliteBook 840 G10",["Core i7","16GB RAM","Security"],32700],["Lenovo","Yoga Slim 7",["Ryzen 7","16GB RAM","OLED"],29200],["ASUS","TUF Gaming A15",["Ryzen 7","RTX 4050","144Hz"],34800],["Acer","Aspire 7",["Core i5","RTX 3050","512GB SSD"],27900],["MSI","Katana 15",["Core i7","RTX 4060","Gaming"],38900],["Samsung","Galaxy Book4 360",["Core 7","Touch","Convertible"],35900],["Huawei","MateBook D16",["Core i5","16GB RAM","16 inch"],23600],["LG","UltraPC 15",["Ryzen 5","16GB RAM","512GB SSD"],21400],["Dell","G15 Gaming",["Core i7","RTX 4060","120Hz"],37400],["HP","Omen Transcend 14",["Core Ultra 7","RTX 4060","OLED"],58900],["Lenovo","IdeaPad Slim 5",["Ryzen 5","16GB RAM","1TB SSD"],23900],["ASUS","Vivobook S15",["Core Ultra 5","16GB RAM","OLED"],26900],["Acer","Nitro V 15",["Core i5","RTX 4050","144Hz"],31900],["MSI","Prestige 14",["Core i7","32GB RAM","Creator"],44900],["Microsoft","Surface Laptop 6",["Core Ultra 7","16GB RAM","Touch"],41900],["Gigabyte","G5 KF",["Core i5","RTX 4060","Gaming"],33900],["Razer","Blade 14",["Ryzen 9","RTX 4070","QHD"],74900],["Apple","MacBook Air M3 15",["M3","16GB RAM","512GB SSD"],42900]];
+const D=[["Dell","OptiPlex 7010 Tower",["Core i7","16GB RAM","512GB SSD"],27500],["HP","Elite Tower 800 G9",["Core i7","32GB RAM","Business"],34900],["Lenovo","ThinkCentre M90t",["Core i7","16GB RAM","1TB SSD"],31800],["Apple","Mac mini M2",["M2","8GB RAM","256GB SSD"],24900],["Apple","Mac Studio M2 Max",["M2 Max","32GB RAM","Creator"],82900],["ASUS","ROG G22CH",["Core i7","RTX 4070","Gaming"],64500],["MSI","Aegis RS",["Core i9","RTX 4080","32GB RAM"],95900],["Acer","Predator Orion 5000",["Core i7","RTX 4070 Ti","Gaming"],84900],["HP","Omen 45L",["Core i9","RTX 4090","Liquid"],129900],["Dell","Alienware Aurora R16",["Core i9","RTX 4080","32GB RAM"],109900],["Lenovo","Legion Tower 5",["Ryzen 7","RTX 4070","Gaming"],67900],["Intel","NUC 13 Pro",["Core i7","Mini PC","Wi-Fi 6E"],21900],["Beelink","SER7 Mini PC",["Ryzen 7","32GB RAM","1TB SSD"],26500],["Zotac","Magnus One",["Core i7","RTX 3070","Compact"],58500],["Corsair","Vengeance i7400",["Core i7","RTX 4080","RGB"],112000],["Cooler Master","MasterBox Build",["Ryzen 5","RTX 4060","Gaming"],39500],["NZXT","Player Two",["Ryzen 7","RTX 4070","White"],71900],["Thermaltake","View 270 Build",["Core i5","RTX 4060","RGB"],42900],["Gigabyte","Aorus Model S",["Core i7","RTX 4070","Silent"],73900],["ASRock","DeskMini X300",["Ryzen 5","Mini PC","Fast SSD"],17900],["Dell","Precision 3660",["Core i9","RTX A2000","Workstation"],89900],["HP","Z2 Tower G9",["Core i9","NVIDIA T1000","CAD"],85900],["Lenovo","ThinkStation P3",["Core i7","RTX A4000","Workstation"],97500],["MSI","Creator P100X",["Core i7","RTX 4070","Creator"],78800],["Acer","Aspire TC",["Core i5","8GB RAM","512GB SSD"],18900],["HP","Pavilion Desktop",["Ryzen 5","16GB RAM","1TB SSD"],22400],["Dell","Inspiron Desktop",["Core i5","16GB RAM","512GB SSD"],21900],["Lenovo","IdeaCentre 5",["Ryzen 5","16GB RAM","Wi-Fi"],20500],["ASUS","ExpertCenter D7",["Core i7","16GB RAM","Business"],29900],["Custom","RTX Creator Pro",["Core i9","RTX 4070 Ti","64GB RAM"],104900]];
+const A=[["Logitech","MX Master 3S Mouse",["Wireless","8K DPI","Silent"],4200],["Logitech","MX Keys Keyboard",["Wireless","Backlit","Arabic"],5200],["Razer","DeathAdder V3",["Gaming","30K DPI","Light"],3900],["Razer","BlackWidow V4",["Mechanical","RGB","Gaming"],7400],["SteelSeries","Arctis Nova 7",["Wireless","Surround","Gaming"],8600],["HyperX","Cloud III Headset",["DTS","Mic","Comfort"],4300],["Samsung","T7 Shield 1TB",["Portable SSD","USB-C","Rugged"],5600],["SanDisk","Extreme Pro 2TB",["Portable SSD","2000MB/s","USB-C"],9800],["Anker","PowerExpand Hub",["USB-C","HDMI","7-in-1"],3100],["Anker","737 Power Bank",["24000mAh","140W","USB-C"],7200],["Belkin","Thunderbolt 4 Dock",["12 Ports","4K","PD"],12900],["Ugreen","GaN Charger 100W",["4 Ports","PD","Compact"],3400],["Dell","UltraSharp U2723QE",["27 inch","4K","USB-C"],24500],["LG","UltraGear 27GP850",["27 inch","165Hz","QHD"],18200],["Samsung","Odyssey G5",["32 inch","165Hz","Curved"],16900],["ASUS","ProArt PA278QV",["27 inch","IPS","Creator"],15500],["Elgato","Stream Deck MK.2",["15 Keys","Studio","USB-C"],6900],["Elgato","Facecam Neo",["1080p","USB","Streaming"],5200],["Blue","Yeti USB Mic",["Podcast","USB","Studio"],6500],["Logitech","Brio 4K Webcam",["4K","HDR","Windows Hello"],7800],["Cooler Master","Notepal X3",["Laptop Cooler","Fan","RGB"],1900],["TP-Link","Archer AX73",["Wi-Fi 6","Router","5400Mbps"],5100],["Synology","BeeDrive 1TB",["Backup","SSD","USB-C"],6400],["Kingston","Fury Beast 32GB",["DDR5","5600MHz","Kit"],4900],["Crucial","P5 Plus 1TB",["NVMe","Gen4","SSD"],4400],["NVIDIA","RTX 4070 Super",["12GB","Ray Tracing","Gaming"],38900],["AMD","Ryzen 7 7800X3D",["8 Cores","Gaming","AM5"],18900],["Intel","Core i7-14700K",["20 Cores","LGA1700","Unlocked"],21900],["Corsair","RM850x PSU",["850W","Gold","Modular"],6200],["NZXT","H6 Flow Case",["ATX","Airflow","Tempered"],6900]];
+const SECS=[
+{id:"gaming",n:"لابتوبات الألعاب",img:"https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=60",d:"للمتطلبات العالية والألعاب الثقيلة: كروت RTX وشاشات 144Hz+ وتبريد قوي."},
+{id:"work",n:"لابتوبات العمل",img:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=60",d:"للعمل المكتبي والإنتاجية: اعتمادية وأمان وبطارية تكمل يومك."},
+{id:"study",n:"لابتوبات الطلاب",img:"https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=60",d:"للدراسة والاستخدام العام: سعر مناسب ووزن خفيف وبطارية طويلة."},
+{id:"pro",n:"لابتوبات المحترفين",img:"https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=600&q=60",d:"للتصميم والبرمجة والمونتاج: شاشات OLED ودقة ألوان ومعالجات قوية."},
+{id:"travel",n:"الأسفار الخفيفة",img:"https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=60",d:"الخفيفة والمحمولة: وزن أقل من 1.4 كجم وبطارية +10 ساعات للتنقل."},
+{id:"budget",n:"الميزانية المحدودة",img:"https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?auto=format&fit=crop&w=600&q=60",d:"الأرخص والأساسية: أفضل قيمة مقابل السعر تحت 24 ألف جنيه."}];
+function classify(name,specs,price){
+const t=(name+" "+specs.join(" ")).toLowerCase();
+const isG=/gaming|rtx|rog|omen|legion|predator|tuf|katana|victus|nitro|165hz|240hz|144hz|4060|4070|4050/i.test(t);
+if(isG)return "gaming";
+if(price<=23500)return "budget";
+const isT=/gram|air|swift go|zenbook|yoga|x1 carbon|galaxy book|matebook|surface laptop|vivobook|ideapad slim|ultrabook|gram|x360/i.test(t);
+if(isT&&price<36000)return "travel";
+const isP=/oled|amoled|creator|prestige|proart|studio|m3|m2 max|m3 max|macbook pro|workstation|qhd/i.test(t);
+if(isP)return "pro";
+if(/business|security|thinkpad|latitude|elitebook|probook|expertcenter|optiplex/i.test(t))return "work";
+if(price<=28500)return "study";
+if(price>42000)return "pro";
+return "work";
+}
+function mk(arr,cat){return arr.map((x,i)=>{let sec=cat==="laptop"?classify(x[1],x[2],x[3]):cat;
+const disc=(i%3===0)?Math.min(25,10+(i%4)*4):0;const old=disc?Math.round(x[3]*(1+disc/100)):null;
+const stock=(i===7||i===23)?"out":(i%9===4?"low":"in");
+return{id:cat+"-"+(i+1),brand:x[0],name:x[1],specs:x[2],price:x[3],old,disc,cat,sec,gaming:sec==="gaming",rate:(4+((i*7)%10)/10).toFixed(1),sold:150+((i*137)%900),stock,g:gal(cat,i)}})}
+const P=[...mk(L,"laptop"),...mk(D,"desktop"),...mk(A,"accessory")];
+/* ضمان 3 منتجات لكل قسم في الرئيسية */
+function picks(sec){let a=P.filter(p=>p.sec===sec&&p.stock!=="out").sort((x,y)=>y.sold-x.sold);if(a.length<3){const extra=P.filter(p=>p.cat==="laptop"&&p.sec!==sec&&!a.includes(p)).slice(0,3-a.length);a=a.concat(extra)}const cheap=[...a].sort((x,y)=>x.price-y.price)[0];const best=a[0];let mid=a[Math.floor(a.length/2)]||a[1];const set=[best,mid,cheap].filter((v,i,arr)=>v&&arr.indexOf(v)===i);while(set.length<3)set.push(a[set.length%a.length]);return set.slice(0,3)}
+let cart=JSON.parse(localStorage.getItem("ts_cart")||"[]");
+const $=id=>document.getElementById(id);
+const fmt=n=>n.toLocaleString("ar-EG")+" ج.م";
+const stars=r=>{let h='<span style="display:inline-flex;gap:2px;vertical-align:middle">';for(let k=1;k<=5;k++){h+='<svg width="15" height="15" viewBox="0 0 24 24" fill="'+(k<=Math.round(r)?'#ffd166':'none')+'" stroke="#ffd166" stroke-width="1.6"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg>'}return h+'</span>'};
+const stockT={in:" متاح",low:" كمية محدودة",out:" غير متاح"};
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(e._t);e._t=setTimeout(()=>e.style.display="none",1800)}
+/* brands + chips */
+[...new Set(P.map(p=>p.brand))].sort().forEach(b=>{const o=document.createElement("option");o.value=b;o.textContent=b;$("fBrand").appendChild(o)});
+$("chipRow").innerHTML=[["all","الكل"],["gaming"," ألعاب"],["work"," عمل"],["study"," طلاب"],["pro"," محترفين"],["travel"," سفر"],["budget"," ميزانية"]].map(([v,n])=>`<button class="chip ${v==="all"?"on":""}" data-v="${v}" onclick="setChip('${v}',this)">${n}</button>`).join("");
+let curChip="all";
+function setChip(v,el){curChip=v;document.querySelectorAll("#chipRow .chip").forEach(x=>x.classList.remove("on"));el.classList.add("on");$("fSec").value=(v==="all"?"all":v);render()}
+function goSection(s){$("fSec").value=s;curChip=s;document.querySelectorAll("#chipRow .chip").forEach(x=>x.classList.toggle("on",x.dataset.v===s));render();document.querySelector("#catalog").scrollIntoView({behavior:"smooth"})}
+/* cards */
+function card(p){const dis=p.stock==="out";return `<div class="card"><div class="pimg"><img loading="lazy" decoding="async" width="800" height="533" src="${p.g[0]}" alt="${p.brand} ${p.name} - ${LBL[0]}"><span class="badge">${p.disc?"خصم "+p.disc+"%":"مميز"}</span><span class="stock ${p.stock}">${stockT[p.stock]}</span></div><div class="pbody"><div class="bname">${p.brand}</div><div class="pname">${p.name}</div><div class="rate">${stars(p.rate)} ${p.rate} (${p.sold} باع)</div><div class="specs">${p.specs.map(s=>`<span>${s}</span>`).join("")}</div><div class="prow"><div><span class="price">${fmt(p.price)}</span>${p.old?`<span class="old">${fmt(p.old)}</span>`:""}</div></div><div class="card-btns"><button class="det" onclick="openP('${p.id}')">اعرض التفاصيل</button><button class="add" ${dis?"disabled":""} onclick="addC('${p.id}',1)" aria-label="أضف للسلة">+</button></div></div></div>`}
+/* homepage 18 */
+const feat4=[...P].filter(p=>p.stock!=="out").sort((a,b)=>b.sold-a.sold).slice(0,4);$("home-picks").innerHTML=`<section class="sec" style="padding-top:10px"><div class="sec-head"><span class="eyebrow">مختارات مميزة</span><h2>الأعلى مبيعاً هذا الأسبوع</h2><p>4 منتجات مختارة فقط — باقي المنتجات في الكتالوج تحت مع بحث وفلاتر.</p></div><div class="grid">${feat4.map(card).join("")}</div><a class="more" href="#catalog">تصفح الكتالوج الكامل ←</a></section>`;
+$("dealRow").innerHTML=[...P].filter(p=>p.disc).sort((a,b)=>b.disc-a.disc).slice(0,6).map(card).join("");
+/* catalog filter */
+function filtered(){const q=$("q").value.trim().toLowerCase(),sec=$("fSec").value,b=$("fBrand").value,cpu=$("fCpu").value,ram=$("fRam").value,s=$("fSort").value,mp=+$("fPrice").value;$("pLbl").textContent=mp>=1000?Math.round(mp/1000)+"K":mp;
+let f=P.filter(p=>{const okS=sec==="all"||p.sec===sec||p.cat===sec;const okB=b==="all"||p.brand===b;const okP=p.price<=mp;const txt=(p.brand+" "+p.name+" "+p.specs.join(" ")).toLowerCase();
+let okC=cpu==="all"||txt.includes(cpu==="Apple M"?"m":cpu.toLowerCase());let okR=true;if(ram!=="all"){const m=(p.specs.join(" ").match(/(\d+)GB/i)||[0,0])[1];okR=ram==="32"?+m>=32:txt.includes(ram+"gb")}return okS&&okB&&okP&&okC&&okR&&txt.includes(q)});
+if(s==="cheap")f.sort((a,b)=>a.price-b.price);else if(s==="exp")f.sort((a,b)=>b.price-a.price);else if(s==="rate")f.sort((a,b)=>b.rate-a.rate);else if(s==="disc")f.sort((a,b)=>(b.disc||0)-(a.disc||0));else f.sort((a,b)=>b.sold-a.sold);return f}
+let shown=12;const PAGE=12;let lastSig="";function sig(){return $("q").value+"|"+$("fSec").value+"|"+$("fBrand").value+"|"+$("fCpu").value+"|"+$("fRam").value+"|"+$("fSort").value+"|"+$("fPrice").value}
+function render(){const s=sig();if(s!==lastSig){lastSig=s;shown=PAGE}const f=filtered();$("count").textContent="عدد النتائج: "+f.length.toLocaleString("ar-EG")+" منتج (مرتبة: "+$("fSort").selectedOptions[0].text+")";const vis=f.slice(0,shown);$("grid").innerHTML=vis.length?vis.map(card).join(""):"<p style='color:var(--muted)'>لا توجد نتائج — جرب كلمة أخرى أو امسح الفلاتر.</p>";const ex=$("moreWrap");if(f.length>shown){ex.style.display="block";ex.querySelector("button").textContent="عرض المزيد ("+(f.length-shown)+" منتج متبقي)"}else{ex.style.display="none"}}
+function moreProducts(){shown+=PAGE;render()}
+function clearF(){$("q").value="";$("qTop").value="";$("fSec").value="all";$("fBrand").value="all";$("fCpu").value="all";$("fRam").value="all";$("fSort").value="pop";$("fPrice").value=130000;curChip="all";document.querySelectorAll("#chipRow .chip").forEach(x=>x.classList.toggle("on",x.dataset.v==="all"));render()}
+/* product page */
+let curQ=1;
+function openP(id){const p=P.find(x=>x.id===id);curQ=1;const rel=P.filter(x=>x.sec===p.sec&&x.id!==p.id).slice(0,3);const revs=JSON.parse(localStorage.getItem("rev_"+id)||"[]");
+$("pModal").innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px"><b>${p.brand} ${p.name}</b><button class="btn btn-g" style="min-width:52px" onclick="closeAll()">×</button></div>
+<div class="mgrid"><div>
+<div class="mgal"><img class="main" id="gMain" src="${p.g[0].replace("w=800","w=1200")}" alt="${p.name} ${LBL[0]}" fetchpriority="high"><div class="thumbs">${p.g.map((g,i)=>`<figure><img class="${i===0?"on":""}" loading="lazy" src="${g}" alt="${LBL[i]}" onclick="swImg(this,'${g.replace("w=800","w=1200")}')"><figcaption>${LBL[i]}</figcaption></figure>`).join("")}</div>
+<p style="color:var(--muted);font-size:.82rem"> صور حقيقية 1200×800 مضغوطة (أقل من 300KB) — أمامية / جانبية / تفصيلية / أثناء الاستخدام. فيديو سريع للمنتج قريباً.</p></div>
+<table class="spec"><tr><th>المعالج</th><td>${p.specs[0]}</td></tr><tr><th>الذاكرة</th><td>${p.specs[1]}</td></tr><tr><th>التخزين/الشاشة</th><td>${p.specs[2]}</td></tr><tr><th>القسم</th><td>${SECS.find(s=>s.id===p.sec)?.n||p.cat}</td></tr><tr><th>التوفر</th><td>${stockT[p.stock]}</td></tr><tr><th>الضمان</th><td>${p.cat==="accessory"?"سنة":"حتى 3 سنوات + دعم فني"}</td></tr><tr><th>الشحن</th><td>150 ج.م — مجاني فوق 20,000 ج.م</td></tr><tr><th>التقييم</th><td>${stars(p.rate)} ${p.rate} (${p.sold} شراء)</td></tr></table></div>
+<div><div class="rate">${stars(p.rate)} ${p.rate}</div>
+<div style="font-size:1.5rem;font-weight:900;color:var(--green)">${fmt(p.price)} ${p.old?`<span class="old">${fmt(p.old)} (−${p.disc}%)</span>`:""}</div>
+<p style="color:var(--muted)">${p.name} من ${p.brand} بمواصفات ${p.specs.join("، ")}. ${SECS.find(s=>s.id===p.sec)?.d||""} مناسب لـ${{gaming:"الألعاب والبث",work:"الشغل اليومي",study:"الدراسة",pro:"التصميم والبرمجة",travel:"السفر والتنقل",budget:"أفضل قيمة بسعر منخفض"}[p.sec]||"الاستخدام العام"}.</p>
+<b>الكمية:</b><div class="qty"><button onclick="chQ(-1)">−</button><b id="qN">1</b><button onclick="chQ(1)">+</button></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0"><button class="btn btn-p" ${p.stock==="out"?"disabled":""} onclick="addC('${p.id}',curQ)">أضف للسلة </button><button class="btn btn-g" ${p.stock==="out"?"disabled":""} onclick="buyNow('${p.id}')">اشتري الآن </button></div>
+<h4>التقييمات (${revs.length})</h4><div>${revs.length?revs.map(r=>`<div style="border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px"><b>${r.n}</b> ${stars(5)}<br><small style="color:var(--muted)">${r.t}</small></div>`).join(""):"<p style='color:var(--muted)'>كن أول من يقيّم.</p>"}</div>
+<input id="rvN" placeholder="اسمك" style="width:100%;margin-bottom:8px;background:#0b111d;border:1px solid var(--line);color:#fff;border-radius:8px;padding:12px;min-height:50px"><textarea id="rvT" placeholder="رأيك..." style="width:100%;background:#0b111d;border:1px solid var(--line);color:#fff;border-radius:8px;padding:12px"></textarea><button class="btn btn-g" style="margin-top:8px;width:100%" onclick="sendRev('${p.id}')">نشر التقييم</button>
+</div></div><h4>منتجات ذات صلة</h4><div class="grid">${rel.map(card).join("")}</div>`;show("pModal")}
+function swImg(el,src){document.querySelectorAll(".thumbs img").forEach(i=>i.classList.remove("on"));el.classList.add("on");$("gMain").src=src}
+function chQ(d){curQ=Math.max(1,Math.min(5,curQ+d));$("qN").textContent=curQ}
+function sendRev(id){const t=$("rvT").value||"";if(!t)return toast("اكتب رأيك أولاً");const k="rev_"+id,a=JSON.parse(localStorage.getItem(k)||"[]");a.push({n:$("rvN").value||"عميل",t});localStorage.setItem(k,JSON.stringify(a));toast("تم نشر تقييمك ");openP(id)}
+/* cart */
+function save(){localStorage.setItem("ts_cart",JSON.stringify(cart));upd()}
+function addC(id,q){const p=P.find(x=>x.id===id);if(p.stock==="out")return toast("غير متاح حالياً");const ex=cart.find(x=>x.id===id);if(ex)ex.q=Math.min(5,ex.q+q);else cart.push({id,q});save();toast("اتضاف للسلة ");openCart()}
+function buyNow(id){addC(id,curQ);openCheckout()}
+function upd(){const n=cart.reduce((a,c)=>a+c.q,0);$("cartBtn").textContent=` السلة (${n})`;$("bCount").textContent=n;
+const box=$("cItems");box.innerHTML=cart.length?cart.map((c,i)=>{const p=P.find(x=>x.id===c.id);return `<div class="citem"><img loading="lazy" src="${p.g[0]}" alt=""><div><b style="font-size:.88rem">${p.name}</b><br><small style="color:var(--muted)">${fmt(p.price)}</small><div style="display:flex;gap:8px;margin-top:6px;align-items:center"><button style="width:48px;height:48px" onclick="cq(${i},-1)">−</button><b>${c.q}</b><button style="width:48px;height:48px" onclick="cq(${i},1)">+</button><button style="color:#ff8fa3" onclick="rm(${i})">حذف</button></div></div><b>${fmt(p.price*c.q)}</b></div>`}).join(""):"<p style='color:var(--muted)'>سلتك فاضية.</p>";
+const t=calc();$("cTot").innerHTML=`الفرعي: <b>${fmt(t.sub)}</b><br>الخصم: <b style="color:var(--green)">−${fmt(t.disc)}</b><br>الشحن: <b>${t.ship===0?"مجاني ":fmt(t.ship)}</b><br>الضريبة 14%: <b>${fmt(t.tax)}</b><br><span style="font-size:1.2rem">الإجمالي: <b style="color:var(--yellow)">${fmt(t.total)}</b></span>`}
+function calc(){let sub=0,disc=0;cart.forEach(c=>{const p=P.find(x=>x.id===c.id);sub+=p.price*c.q;if(p.old)disc+=(p.old-p.price)*c.q});const ship=sub===0?0:(sub>20000?0:150);return{sub,disc,ship,tax:Math.round(sub*.14),total:sub+ship+Math.round(sub*.14)}}
+function cq(i,d){cart[i].q+=d;if(cart[i].q<1)cart.splice(i,1);save();upd()}
+function rm(i){cart.splice(i,1);save();upd()}
+function openCart(){upd();show("drawer")}
+function openCheckout(){if(!cart.length)return toast("السلة فاضية");closeAll();const t=calc();$("coModal").innerHTML=`<div style="display:flex;justify-content:space-between"><b>الدفع — خطوة واحدة سريعة </b><button class="btn btn-g" onclick="closeAll()">×</button></div><input id="oN" placeholder="الاسم" style="width:100%;margin:10px 0;background:#0b111d;border:1px solid var(--line);color:#fff;border-radius:10px;padding:14px;min-height:52px"><input id="oP" placeholder="الموبايل" style="width:100%;margin-bottom:10px;background:#0b111d;border:1px solid var(--line);color:#fff;border-radius:10px;padding:14px;min-height:52px"><input id="oA" placeholder="العنوان" style="width:100%;margin-bottom:10px;background:#0b111d;border:1px solid var(--line);color:#fff;border-radius:10px;padding:14px;min-height:52px"><div class="tot">الإجمالي: <b style="color:var(--yellow);font-size:1.25rem">${fmt(t.total)}</b> (شامل الشحن والضريبة)</div><button class="btn btn-p" style="width:100%;margin-top:12px" onclick="confirmO()">تأكيد الطلب </button>`;show("coModal")}
+function confirmO(){if(!$("oN").value||!$("oP").value)return toast("اكتب الاسم والموبايل");$("coModal").innerHTML=`<div style="text-align:center;padding:20px"><div style="width:84px;height:84px;margin:0 auto;border-radius:50%;background:rgba(63,230,168,.12);border:2px solid #3fe6a8;display:grid;place-items:center"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3fe6a8" stroke-width="2.4"><path d="M4 12.5l5 5L20 6.5"/></svg></div><h3>شكراً! طلبك اتسجل</h3><p style="color:var(--muted)">رقم الطلب: TS-${Date.now().toString().slice(-6)} — هنتصل للتأكيد.</p><button class="btn btn-p" style="width:100%" onclick="cart=[];save();upd();closeAll()">تمام </button></div>`}
+function orderWA(){if(!cart.length)return toast("السلة فاضية");const t=calc();let msg="طلب تك ستور:"+"\n";for(let k=0;k<cart.length;k++){const it=cart[k];const pr=P.find(function(x){return x.id===it.id});msg+=pr.name+" x"+it.q+"\n"}msg+="الاجمالي: "+t.total+" ج.م";window.open("https://wa.me/201000000000?text="+encodeURIComponent(msg),"_blank")}
+function show(id){$("ov").classList.add("show");$(id==="drawer"?"drawer":id).classList.add("show")}
+function closeMenu(){document.querySelector(".links").classList.remove("open")}
+function closeAll(){$("ov").classList.remove("show");document.querySelectorAll(".modal,.drawer").forEach(e=>e.classList.remove("show"));document.querySelector(".links").classList.remove("open")}
+$("cartBtn").onclick=openCart;
+let end=Date.now()+2*864e5;setInterval(()=>{let d=Math.max(0,end-Date.now());$("d").textContent=String(Math.floor(d/864e5)).padStart(2,"0");$("h").textContent=String(Math.floor(d/36e5)%24).padStart(2,"0");$("m").textContent=String(Math.floor(d/6e4)%60).padStart(2,"0");$("s").textContent=String(Math.floor(d/1e3)%60).padStart(2,"0")},1000);
+render();upd();
+</script>
 </body>
 </html>
