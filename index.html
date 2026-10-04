@@ -75,7 +75,7 @@ table.spec{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0}tab
 .toast{position:fixed;bottom:90px;inset-inline:12px;margin:auto;width:fit-content;max-width:92vw;background:#0f2a1d;border:1px solid var(--green);color:#d8ffe9;padding:12px 20px;border-radius:999px;z-index:120;display:none;font-weight:800;text-align:center}
 .catbar{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:10px 12px;background:#0d1322;border-bottom:1px solid var(--line);overflow-x:auto}.catbar a{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.78rem;font-weight:800;color:var(--muted);min-width:76px}.catbar img{width:56px;height:56px;object-fit:cover;border-radius:50%;border:2px solid var(--line)}.sec-cover{border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-bottom:12px}.sec-cover img{width:100%;height:170px;object-fit:cover}
  /* bottom mobile nav */
-.bottomnav{position:fixed;bottom:0;inset-inline:0;z-index:70;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(13,19,34,.97);border-top:1px solid var(--line);backdrop-filter:blur(12px)}.bottomnav a,.bottomnav button{background:none;border:0;color:var(--muted);font-weight:800;padding:12px 4px calc(10px + env(safe-area-inset-bottom));cursor:pointer;font-size:.85rem}
+.bottomnav{position:fixed;bottom:0;inset-inline:0;z-index:70;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(13,19,34,.97);border-top:1px solid var(--line);backdrop-filter:blur(12px)}.bottomnav a,.bottomnav button{background:none;border:0;color:var(--muted);font-weight:800;padding:12px 4px calc(10px + env(safe-area-inset-bottom));cursor:pointer;font-size:.85rem}
 /* ===== TABLET+ ===== */
 @media(min-width:700px){
 body{padding-bottom:0}.bottomnav{display:none}.burger{display:none}.links{display:flex!important;position:static;flex-direction:row;background:none;border:0;padding:0;gap:16px}.links a{border:0;padding:8px 4px;color:var(--muted)}
@@ -86,6 +86,17 @@ body{padding-bottom:0}.bottomnav{display:none}.burger{display:none}.links{displa
 .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 }
 @media(min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+/* ===== لوحة التحكم ===== */
+.admin-frm{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;margin-bottom:14px}
+.admin-frm input,.admin-frm select,.admin-frm textarea{background:#0b111d;border:1px solid var(--line);color:var(--text);border-radius:10px;min-height:50px;padding:10px 12px;width:100%;font-size:.95rem}
+.admin-frm textarea{min-height:70px;resize:vertical}
+.admin-frm label{font-weight:800;font-size:.9rem}
+.img-prev{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;border:1px dashed rgba(255,255,255,.3);background:#0b111d}
+.alist{display:grid;gap:10px}.arow{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px;background:rgba(255,255,255,.03)}
+.arow img{width:64px;height:48px;object-fit:cover;border-radius:8px}
+.abtns{display:flex;gap:6px}.abtns button{min-height:44px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:#141b2e;color:#fff;cursor:pointer;font-weight:800}
+.abtns .del{border-color:#8a2438;color:#ff9aae}
+.astats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.astats div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.astats b{display:block;font-size:1.2rem;color:var(--cyan)}
 </style>
 </head>
 <body>
@@ -94,9 +105,10 @@ body{padding-bottom:0}.bottomnav{display:none}.burger{display:none}.links{displa
 <button class="burger" onclick="document.querySelector('.links').classList.toggle('open')" aria-label="القائمة"><span></span><span></span><span></span></button>
 <a class="brand" href="#top"><span class="mark"><img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=100&q=60" alt="تك ستور" style="width:100%;height:100%;object-fit:cover"></span> تك ستور</a>
 <nav class="links">
-<a href="#home-sec" onclick="closeMenu()">الرئيسية</a><a href="#catalog" onclick="closeMenu()">الأقسام</a><a href="#deals" onclick="closeMenu()">العروض</a><a href="#catalog" onclick="closeMenu()">الكتالوج</a><a href="#brands" onclick="closeMenu()">الماركات</a><a href="#faq" onclick="closeMenu()">الأسئلة الشائعة</a>
+<a href="#home-sec" onclick="closeMenu()">الرئيسية</a><a href="#catalog" onclick="closeMenu()">الأقسام</a><a href="#deals" onclick="closeMenu()">العروض</a><a href="#catalog" onclick="closeMenu()">الكتالوج</a><a href="#brands" onclick="closeMenu()">الماركات</a><a href="#faq" onclick="closeMenu()">الأسئلة الشائعة</a><a href="#" onclick="closeMenu();openAdmin();return false" style="color:var(--yellow)">⚙ لوحة التحكم</a>
 </nav>
 <span class="nav-sp"></span>
+<button class="cart-btn" onclick="openAdmin()" style="border-color:rgba(255,209,102,.5);background:rgba(255,209,102,.1)">⚙ تحكم</button>
 <button class="cart-btn" id="cartBtn">السلة (0)</button>
 </header>
 <nav class="catbar" aria-label="أقسام اللابتوبات">
@@ -164,8 +176,9 @@ body{padding-bottom:0}.bottomnav{display:none}.burger{display:none}.links{displa
 <div class="policy"><div><b> الخصوصية:</b> بياناتك للطلب فقط، لا مشاركة مع طرف ثالث، واتصال مشفر SSL.</div><div><b> الاسترجاع:</b> 14 يوم استبدال لعيوب الصناعة مع الفاتورة والعلبة.</div><div><b> الشحن:</b> 150 ج.م، مجاني فوق 20 ألف. معاينة قبل الدفع.</div><div><b> الضمان:</b> حتى 3 سنوات + دعم فني واتساب/تليفون.</div></div></section>
 </main>
 <footer><div>© 2026 تك ستور - جميع الحقوق محفوظة | Created by : Bassem Ahmed</div><div style="margin-top:6px">SSL | أسعار شاملة ضريبة 14% | توصيل لكل مصر</div></footer>
-<nav class="bottomnav"><a href="#home-sec"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><br>الرئيسية</a><a href="#catalog"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><br>بحث</a><button onclick="openCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M2 3h3l2.6 12.5h11.2l2-8H6"/></svg><br>السلة (<span id="bCount">0</span>)</button></nav>
+<nav class="bottomnav"><a href="#home-sec"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg><br>الرئيسية</a><a href="#catalog"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><br>بحث</a><button onclick="openCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.6"/><circle cx="17" cy="20" r="1.6"/><path d="M2 3h3l2.6 12.5h11.2l2-8H6"/></svg><br>السلة (<span id="bCount">0</span>)</button><button onclick="openAdmin()">⚙<br>التحكم</button></nav>
 <div class="overlay" id="ov" onclick="closeAll()"></div>
+<div class="modal" id="adminModal" style="max-width:760px;margin:auto"></div>
 <div class="modal" id="pModal"></div>
 <div class="modal" id="coModal" style="max-width:640px;margin:auto"></div>
 <aside class="drawer" id="drawer"><h3 style="margin:0 0 12px"> سلة المشتريات</h3><div id="cItems"></div><div class="tot" id="cTot"></div>
@@ -261,7 +274,7 @@ function sendRev(id){const t=$("rvT").value||"";if(!t)return toast("اكتب ر�
 function save(){localStorage.setItem("ts_cart",JSON.stringify(cart));upd()}
 function addC(id,q){const p=P.find(x=>x.id===id);if(p.stock==="out")return toast("غير متاح حالياً");const ex=cart.find(x=>x.id===id);if(ex)ex.q=Math.min(5,ex.q+q);else cart.push({id,q});save();toast("اتضاف للسلة ");openCart()}
 function buyNow(id){addC(id,curQ);openCheckout()}
-function upd(){const n=cart.reduce((a,c)=>a+c.q,0);$("cartBtn").textContent=` السلة (${n})`;$("bCount").textContent=n;
+function upd(){cart=cart.filter(c=>P.find(x=>x.id===c.id));const n=cart.reduce((a,c)=>a+c.q,0);$("cartBtn").textContent=` السلة (${n})`;$("bCount").textContent=n;
 const box=$("cItems");box.innerHTML=cart.length?cart.map((c,i)=>{const p=P.find(x=>x.id===c.id);return `<div class="citem"><img loading="lazy" src="${p.g[0]}" alt=""><div><b style="font-size:.88rem">${p.name}</b><br><small style="color:var(--muted)">${fmt(p.price)}</small><div style="display:flex;gap:8px;margin-top:6px;align-items:center"><button style="width:48px;height:48px" onclick="cq(${i},-1)">−</button><b>${c.q}</b><button style="width:48px;height:48px" onclick="cq(${i},1)">+</button><button style="color:#ff8fa3" onclick="rm(${i})">حذف</button></div></div><b>${fmt(p.price*c.q)}</b></div>`}).join(""):"<p style='color:var(--muted)'>سلتك فاضية.</p>";
 const t=calc();$("cTot").innerHTML=`الفرعي: <b>${fmt(t.sub)}</b><br>الخصم: <b style="color:var(--green)">−${fmt(t.disc)}</b><br>الشحن: <b>${t.ship===0?"مجاني ":fmt(t.ship)}</b><br>الضريبة 14%: <b>${fmt(t.tax)}</b><br><span style="font-size:1.2rem">الإجمالي: <b style="color:var(--yellow)">${fmt(t.total)}</b></span>`}
 function calc(){let sub=0,disc=0;cart.forEach(c=>{const p=P.find(x=>x.id===c.id);sub+=p.price*c.q;if(p.old)disc+=(p.old-p.price)*c.q});const ship=sub===0?0:(sub>20000?0:150);return{sub,disc,ship,tax:Math.round(sub*.14),total:sub+ship+Math.round(sub*.14)}}
@@ -275,8 +288,89 @@ function show(id){$("ov").classList.add("show");$(id==="drawer"?"drawer":id).cla
 function closeMenu(){document.querySelector(".links").classList.remove("open")}
 function closeAll(){$("ov").classList.remove("show");document.querySelectorAll(".modal,.drawer").forEach(e=>e.classList.remove("show"));document.querySelector(".links").classList.remove("open")}
 $("cartBtn").onclick=openCart;
+/* ===== لوحة التحكم: إضافة منتجات (صورة + مواصفات + سعر) ===== */
+const ADMIN_PASS="admin123";
+let customP=JSON.parse(localStorage.getItem("ts_custom")||"[]");
+let editId=null; let tmpImg="";
+customP.forEach(c=>{if(!P.find(x=>x.id===c.id))P.push(c)});
+function refreshHome(){
+const f4=[...P].filter(p=>p.stock!=="out").sort((a,b)=>b.sold-a.sold).slice(0,4);
+const hp=$("home-picks"); if(hp) hp.innerHTML=`<section class="sec" style="padding-top:10px"><div class="sec-head"><span class="eyebrow">مختارات مميزة</span><h2>الأعلى مبيعاً هذا الأسبوع</h2><p>4 منتجات مختارة فقط — باقي المنتجات في الكتالوج تحت مع بحث وفلاتر.</p></div><div class="grid">${f4.map(card).join("")}</div><a class="more" href="#catalog">تصفح الكتالوج الكامل ←</a></section>`;
+const dr=$("dealRow"); if(dr) dr.innerHTML=[...P].filter(p=>p.disc).sort((a,b)=>b.disc-a.disc).slice(0,6).map(card).join("");
+const fb=$("fBrand"); if(fb){const cur=fb.value;fb.innerHTML='<option value="all">كل الماركات</option>';[...new Set(P.map(p=>p.brand))].sort().forEach(b=>{const o=document.createElement("option");o.value=b;o.textContent=b;fb.appendChild(o)});fb.value=cur||"all"}
+}
+function openAdmin(){
+const ok=sessionStorage.getItem("ts_admin")==="1";
+const m=$("adminModal");
+if(!ok){
+m.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><b>⚙ لوحة التحكم — تسجيل الدخول</b><button class="btn btn-g" style="min-width:52px" onclick="closeAll()">×</button></div>
+<p style="color:var(--muted)">ادخل كلمة السر للدخول للوحة (الافتراضية: <b style="color:var(--yellow)">admin123</b> — غيّرها من الكود ADMIN_PASS)</p>
+<div class="admin-frm"><label>كلمة السر</label><input type="password" id="aPass" placeholder="••••••"><button class="btn btn-p" onclick="loginAdmin()">دخول اللوحة</button></div>`;
+show("adminModal"); return;
+}
+editId=null; tmpImg="";
+m.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px"><b>⚙ لوحة التحكم — إضافة منتج</b><div style="display:flex;gap:8px"><button class="btn btn-g" onclick="logoutAdmin()">خروج</button><button class="btn btn-g" style="min-width:52px" onclick="closeAll()">×</button></div></div>
+<div class="astats"><div><b id="stAll">0</b>كل المنتجات</div><div><b id="stCus">0</b>منتجاتك</div><div><b id="stOut">0</b>غير متاح</div></div>
+<div class="admin-frm">
+<label>اسم المنتج *</label><input id="nName" placeholder="مثال: Lenovo Legion 5 RTX 4060">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>الماركة *</label><input id="nBrand" placeholder="Lenovo / HP / Apple..." list="brandList"><datalist id="brandList">${[...new Set(P.map(p=>p.brand))].sort().map(b=>`<option value="${b}">`).join("")}</datalist></div>
+<div><label>القسم *</label><select id="nSec"><option value="gaming">🎮 ألعاب</option><option value="work">💼 عمل</option><option value="study">🎓 طلاب</option><option value="pro">🎨 محترفين</option><option value="travel">✈ سفر خفيف</option><option value="budget">💰 ميزانية</option><option value="desktop">🖥 كمبيوتر مكتبي</option><option value="accessory">🎧 اكسسوار</option></select></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>السعر (ج.م) *</label><input id="nPrice" type="number" min="1" placeholder="25000"></div>
+<div><label>السعر قبل الخصم (اختياري)</label><input id="nOld" type="number" min="0" placeholder="30000"></div></div>
+<label>المواصفات (3 خانات — المعالج / الرام / التخزين-الشاشة)</label>
+<input id="nS1" placeholder="مثال: Core i7 / Ryzen 7 / M3"><input id="nS2" placeholder="مثال: 16GB RAM"><input id="nS3" placeholder="مثال: 512GB SSD / RTX 4060">
+<label>صورة المنتج * (ارفع من جهازك أو الصق رابط)</label>
+<img id="imgPrev" class="img-prev" style="display:none">
+<input type="file" id="nFile" accept="image/*" onchange="onImgFile(this)">
+<input id="nUrl" placeholder="https://... رابط الصورة" oninput="onImgUrl(this.value)">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div><label>التوفر</label><select id="nStock"><option value="in">✅ متاح</option><option value="low">⚠ كمية محدودة</option><option value="out">❌ غير متاح</option></select></div>
+<div><label>النوع</label><select id="nCat"><option value="laptop">لابتوب</option><option value="desktop">كمبيوتر</option><option value="accessory">اكسسوار</option></select></div></div>
+<button class="btn btn-p" id="saveBtn" onclick="saveProduct()">➕ إضافة المنتج للمتجر</button>
+<button class="btn btn-g" onclick="clearAForm()">مسح الحقول</button>
+</div>
+<h4>منتجاتك المضافة (<span id="cCount">0</span>)</h4><div class="alist" id="aList"></div>`;
+show("adminModal"); renderAdminList();
+}
+function loginAdmin(){const v=$("aPass").value;if(v===ADMIN_PASS){sessionStorage.setItem("ts_admin","1");openAdmin()}else toast("كلمة السر غلط")}
+function logoutAdmin(){sessionStorage.removeItem("ts_admin");closeAll();toast("خرجت من اللوحة")}
+function onImgFile(inp){const f=inp.files[0];if(!f)return;if(f.size>2500000)return toast("الصورة كبيرة — اختار صورة أقل من 2.5MB");const r=new FileReader();r.onload=e=>{tmpImg=e.target.result;const pv=$("imgPrev");pv.src=tmpImg;pv.style.display="block";$("nUrl").value=""};r.readAsDataURL(f)}
+function onImgUrl(v){if(!v)return;tmpImg=v;const pv=$("imgPrev");pv.src=v;pv.style.display="block"}
+function clearAForm(){["nName","nBrand","nPrice","nOld","nS1","nS2","nS3","nUrl"].forEach(id=>$(id).value="");$("nFile").value="";tmpImg="";editId=null;$("imgPrev").style.display="none";$("saveBtn").textContent="➕ إضافة المنتج للمتجر"}
+function saveProduct(){
+const name=$("nName").value.trim(),brand=$("nBrand").value.trim()||"عام",price=+$("nPrice").value,old=+$("nOld").value||null;
+const s1=$("nS1").value.trim()||"مواصفات مميزة",s2=$("nS2").value.trim()||"ضمان شامل",s3=$("nS3").value.trim()||"جديد";
+const sec=$("nSec").value,cat=$("nCat").value,stock=$("nStock").value;
+if(!name)return toast("اكتب اسم المنتج"); if(!price||price<1)return toast("اكتب سعر صحيح"); if(!tmpImg&&!editId)return toast("ضيف صورة المنتج (ارفع أو الصق رابط)");
+let img=tmpImg; if(editId&&!img){const ex=P.find(x=>x.id===editId);img=ex?ex.g[0]:""}
+if(!img)return toast("ضيف صورة المنتج");
+const disc=old&&old>price?Math.round((old-price)/old*100):0;
+if(editId){
+const i=customP.findIndex(x=>x.id===editId);const j=P.findIndex(x=>x.id===editId);
+const up={...P[j],brand,name,specs:[s1,s2,s3],price,old:disc?old:null,disc,sec,cat,stock,g:[img,img,img,img]};
+if(i>-1)customP[i]=up; if(j>-1)P[j]=up;
+toast("تم تعديل المنتج ✅");
+}else{
+const id="custom-"+Date.now();
+const np={id,brand,name,specs:[s1,s2,s3],price,old:disc?old:null,disc,cat,sec,gaming:sec==="gaming",rate:"5.0",sold:10,stock,g:[img,img,img,img],custom:true};
+customP.push(np); P.push(np); toast("اتضاف المنتج للمتجر 🎉");
+}
+localStorage.setItem("ts_custom",JSON.stringify(customP));
+refreshHome(); render(); clearAForm(); renderAdminList();
+document.querySelector("#catalog").scrollIntoView({behavior:"smooth"}); closeAll();
+}
+function editProduct(id){const p=P.find(x=>x.id===id);if(!p)return;editId=id;tmpImg="";
+$("nName").value=p.name;$("nBrand").value=p.brand;$("nPrice").value=p.price;$("nOld").value=p.old||"";$("nS1").value=p.specs[0]||"";$("nS2").value=p.specs[1]||"";$("nS3").value=p.specs[2]||"";$("nSec").value=p.sec;$("nCat").value=p.cat||"laptop";$("nStock").value=p.stock;
+tmpImg=p.g[0];const pv=$("imgPrev");pv.src=p.g[0];pv.style.display="block";
+$("saveBtn").textContent="💾 حفظ التعديل";window.scrollTo({top:0});toast("عدّل البيانات ثم احفظ")}
+function delProduct(id){if(!confirm("حذف المنتج نهائياً؟"))return;customP=customP.filter(x=>x.id!==id);const j=P.findIndex(x=>x.id===id);if(j>-1)P.splice(j,1);localStorage.setItem("ts_custom",JSON.stringify(customP));cart=cart.filter(c=>c.id!==id);save();refreshHome();render();renderAdminList();toast("اتحذف المنتج")}
+function renderAdminList(){
+const list=$("aList");if(!list)return;
+$("stAll").textContent=P.length.toLocaleString("ar-EG");$("stCus").textContent=customP.length.toLocaleString("ar-EG");$("stOut").textContent=P.filter(p=>p.stock==="out").length;
+$("cCount").textContent=customP.length;
+list.innerHTML=customP.length?[...customP].reverse().map(p=>`<div class="arow"><img src="${p.g[0]}"><div><b style="font-size:.88rem">${p.name}</b><br><small style="color:var(--muted)">${p.brand} • ${fmt(p.price)} • ${p.specs.join(" / ")}</small></div><div class="abtns"><button onclick="editProduct('${p.id}')">تعديل</button><button class="del" onclick="delProduct('${p.id}')">حذف</button></div></div>`).join(""):"<p style='color:var(--muted)'>لسه مضفتش منتجات — ضيف أول منتج من الفورم فوق 👆</p>";
+}
 let end=Date.now()+2*864e5;setInterval(()=>{let d=Math.max(0,end-Date.now());$("d").textContent=String(Math.floor(d/864e5)).padStart(2,"0");$("h").textContent=String(Math.floor(d/36e5)%24).padStart(2,"0");$("m").textContent=String(Math.floor(d/6e4)%60).padStart(2,"0");$("s").textContent=String(Math.floor(d/1e3)%60).padStart(2,"0")},1000);
-render();upd();
+refreshHome();render();upd();
 </script>
 </body>
 </html>
